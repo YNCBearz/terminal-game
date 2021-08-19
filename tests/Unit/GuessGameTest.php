@@ -29,6 +29,6 @@ class GuessGameTest extends TestCase
         $this->game->init();
         $actual = $this->getActualOutput();
 
-        $this->assertStringStartsWith($expected, $actual);
+        $this->assertStringContainsString($expected, $actual);
     }
 }

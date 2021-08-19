@@ -2,6 +2,10 @@
 
 namespace App\Games;
 
+use App\Elements\WordWithColor;
+use App\Enums\Colors\ForegroundColors;
+use App\Utilities\Brush;
+
 class GuessNumberGame
 {
     /**
@@ -9,13 +13,35 @@ class GuessNumberGame
      */
     protected array $options;
 
+    /**
+     * @var bool $isDisplayForHelp
+     */
+    protected bool $isDisplayForHelp;
+
     public function __construct($options)
     {
         $this->options = $options;
+
+        $this->isDisplayForHelp = isset($options['help']);
     }
 
     public function init()
     {
-        echo "Description: 1111";
+        if ($this->isDisplayForHelp) {
+            $this->displayForHelp();
+        }
+    }
+
+    private function displayForHelp(): void
+    {
+        Brush::paintOnConsole("Description:", ForegroundColors::YELLOW);
+        Brush::paintOnConsole("  Display help for a command \n");
+        Brush::paintOnConsole("Options", ForegroundColors::YELLOW);
+        Brush::paintMultiWordsOnConsole(
+            [
+                new WordWithColor('  --help', ForegroundColors::GREEN),
+                new WordWithColor('     Display help for the given command.'),
+            ]
+        );
     }
 }
