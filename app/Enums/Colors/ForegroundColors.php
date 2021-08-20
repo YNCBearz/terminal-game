@@ -8,6 +8,7 @@ class ForegroundColors
     const WHITE = '1;37';
     const BROWN = '0;33';
     const YELLOW = '1;33';
+    const LIGHT_YELLOW = '0;93';
     const DARK_GRAY = '1;30';
     const LIGHT_GRAY = '0;37';
     const BLUE = '0;34';
