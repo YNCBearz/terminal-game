@@ -12,6 +12,18 @@ class GuessGameTest extends TestCase
      */
     protected GuessNumberGame $sut;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        ob_start();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        ob_end_clean();
+    }
+
     /**
      * @param array $options
      *
