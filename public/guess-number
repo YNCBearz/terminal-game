@@ -4,7 +4,7 @@ use App\Games\GuessNumberGame;
 
 require __DIR__.'/../vendor/autoload.php';
 
-$options = getopt("", ['help']);
+$options = getopt("h", ['help']);
 
 $game = new GuessNumberGame($options);
 $game->init();

@@ -22,7 +22,7 @@ class GuessNumberGame
     {
         $this->options = $options;
 
-        $this->isDisplayForHelp = isset($options['help']);
+        $this->isDisplayForHelp = isset($options['help']) || isset($options['h']);
     }
 
     public function init()

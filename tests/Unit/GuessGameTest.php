@@ -15,20 +15,38 @@ class GuessGameTest extends TestCase
     protected GuessNumberGame $game;
 
     /**
+     * @param array $options
+     *
+     * @dataProvider optionsWithHelp
      * @test
      */
-    public function GivenOptionsWithHelp_WhenInit_ThenEchoDescription()
+    public function GivenOptionsWithHelp_WhenInit_ThenEchoHelp(array $options)
     {
-        $options = [
-            'help' => false,
-        ];
-
-        $expected = 'Description:';
+        $expected = 'Display help for a command';
         $this->game = new GuessNumberGame($options);
 
         $this->game->init();
         $actual = $this->getActualOutput();
 
         $this->assertStringContainsString($expected, $actual);
+    }
+
+    /**
+     * @return array
+     */
+    public function optionsWithHelp(): array
+    {
+        return [
+            [
+                [
+                    'help' => false,
+                ],
+            ],
+            [
+                [
+                    'h' => false,
+                ],
+            ],
+        ];
     }
 }
