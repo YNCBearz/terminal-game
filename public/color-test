@@ -1,0 +1,21 @@
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+
+use App\Enums\Colors\BackgroundColors;
+use App\Enums\Colors\ForegroundColors;
+use App\Utilities\Brush;
+
+$foregroundColorReflection = new ReflectionClass(ForegroundColors::class);
+$foregroundColors = ($foregroundColorReflection->getConstants());
+
+$backgroundColorReflection = new ReflectionClass(BackgroundColors::class);
+$backgroundColors = ($backgroundColorReflection->getConstants());
+
+foreach ($foregroundColors as $foregroundColorName => $foregroundColor) {
+    Brush::paintOnConsole("Foreground: ".$foregroundColorName, $foregroundColor);
+}
+
+foreach ($backgroundColors as $backgroundColorName => $backgroundColor) {
+    Brush::paintOnConsole("Background: ".$backgroundColorName, '', $backgroundColor);
+}
