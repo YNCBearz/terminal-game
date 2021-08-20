@@ -1,11 +1,9 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Games;
 
 use App\Games\GuessNumberGame;
 use PHPUnit\Framework\TestCase;
-
-use function PHPUnit\Framework\assertStringStartsWith;
 
 class GuessGameTest extends TestCase
 {
