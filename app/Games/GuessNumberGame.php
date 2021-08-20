@@ -3,6 +3,7 @@
 namespace App\Games;
 
 use App\Elements\WordWithColor;
+use App\Enums\Colors\BackgroundColors;
 use App\Enums\Colors\ForegroundColors;
 use App\Utilities\Brush;
 
@@ -30,6 +31,8 @@ class GuessNumberGame
         if ($this->isDisplayForHelp) {
             $this->displayForHelp();
         }
+
+        $this->pressStart();
     }
 
     private function displayForHelp(): void
@@ -40,9 +43,14 @@ class GuessNumberGame
         Brush::paintOnConsole("Options", ForegroundColors::BROWN);
         Brush::paintMultiWordsOnConsole(
             [
-                new WordWithColor('  -h, --help', ForegroundColors::GREEN),
-                new WordWithColor('     Display help for the given command.'),
+                new WordWithColor("  -h, --help", ForegroundColors::GREEN),
+                new WordWithColor("     Display help for the given command."),
             ]
         );
+    }
+
+    private function pressStart()
+    {
+        Brush::paintOnConsole("Guess Number (4 digits)", ForegroundColors::WHITE);
     }
 }

@@ -49,4 +49,18 @@ class GuessGameTest extends TestCase
             ],
         ];
     }
+
+    /**
+     * @test
+     */
+    public function GivenNoOptions_WhenInit_ThenPressStart()
+    {
+        $expected = 'Guess Number (4 digits)';
+        $this->game = new GuessNumberGame([]);
+
+        $this->game->init();
+        $actual = $this->getActualOutput();
+
+        $this->assertStringContainsString($expected, $actual);
+    }
 }
