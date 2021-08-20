@@ -8,9 +8,9 @@ use PHPUnit\Framework\TestCase;
 class GuessGameTest extends TestCase
 {
     /**
-     * @var GuessNumberGame $game
+     * @var GuessNumberGame $sut
      */
-    protected GuessNumberGame $game;
+    protected GuessNumberGame $sut;
 
     /**
      * @param array $options
@@ -21,9 +21,9 @@ class GuessGameTest extends TestCase
     public function GivenOptionsWithHelp_WhenInit_ThenEchoHelp(array $options)
     {
         $expected = 'Display help for a command';
-        $this->game = new GuessNumberGame($options);
+        $this->sut = new GuessNumberGame($options);
 
-        $this->game->init();
+        $this->sut->init();
         $actual = $this->getActualOutput();
 
         $this->assertStringContainsString($expected, $actual);
@@ -54,9 +54,9 @@ class GuessGameTest extends TestCase
     public function GivenNoOptions_WhenInit_ThenPressStart()
     {
         $expected = 'Guess Number (4-digit)';
-        $this->game = new GuessNumberGame([]);
+        $this->sut = new GuessNumberGame([]);
 
-        $this->game->init();
+        $this->sut->init();
         $actual = $this->getActualOutput();
 
         $this->assertStringContainsString($expected, $actual);
