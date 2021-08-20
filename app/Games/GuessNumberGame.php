@@ -51,6 +51,11 @@ class GuessNumberGame
 
     private function pressStart()
     {
-        Brush::paintOnConsole("Guess Number (4 digits)", ForegroundColors::WHITE);
+        Brush::paintOnConsole("Guess Number (4-digit)", ForegroundColors::WHITE);
+        echo PHP_EOL;
+        Brush::paintOnConsole("Description:", ForegroundColors::BROWN);
+        Brush::paintOnConsole("  You must guess a 4-digit secret number selected by the computer");
+        echo PHP_EOL;
+        Brush::paintOnConsole("Please enter a 4-digit number:", ForegroundColors::GREEN);
     }
 }

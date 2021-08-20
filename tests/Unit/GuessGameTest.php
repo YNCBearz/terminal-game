@@ -55,7 +55,7 @@ class GuessGameTest extends TestCase
      */
     public function GivenNoOptions_WhenInit_ThenPressStart()
     {
-        $expected = 'Guess Number (4 digits)';
+        $expected = 'Guess Number (4-digit)';
         $this->game = new GuessNumberGame([]);
 
         $this->game->init();
