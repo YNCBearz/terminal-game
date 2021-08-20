@@ -35,7 +35,8 @@ class GuessNumberGame
     private function displayForHelp(): void
     {
         Brush::paintOnConsole("Description:", ForegroundColors::YELLOW);
-        Brush::paintOnConsole("  Display help for a command \n");
+        Brush::paintOnConsole("  Display help for a command");
+        echo PHP_EOL;
         Brush::paintOnConsole("Options", ForegroundColors::YELLOW);
         Brush::paintMultiWordsOnConsole(
             [

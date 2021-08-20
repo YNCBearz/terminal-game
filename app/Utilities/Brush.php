@@ -44,7 +44,7 @@ class Brush
      */
     public static function paintOnConsole(string $word, string $foregroundColor = '', string $backgroundColor = '')
     {
-        echo self::paint($word, $foregroundColor, $backgroundColor) . "\n";
+        echo self::paint($word, $foregroundColor, $backgroundColor) . PHP_EOL;
     }
 
     /**
