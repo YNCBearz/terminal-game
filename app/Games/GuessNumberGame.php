@@ -33,6 +33,8 @@ class GuessNumberGame
         }
 
         $this->pressStart();
+
+        $this->hostGame();
     }
 
     private function displayForHelp(): void
@@ -57,5 +59,22 @@ class GuessNumberGame
         Brush::paintOnConsole("  You must guess a 4-digit secret number selected by the computer");
         echo PHP_EOL;
         Brush::paintOnConsole("Please enter a 4-digit number:", ForegroundColors::GREEN);
+    }
+
+    private function hostGame()
+    {
+        //產生4個不重複的數字
+
+        //檢查input是4個不重複的數字
+//        $inputNumber = readline("> ");
+
+        //判斷1A2B
+
+        //4A => Game End
+
+        //else => 回傳目前猜的結果
+
+
+
     }
 }
