@@ -17,11 +17,13 @@ class NumberGeneratorTest extends TestCase
      */
     public function Should_Return4Digit_When_Generate4DigitWithoutRepetitions()
     {
+        $expected = 4;
+
         $this->sut = new NumberGenerator();
 
         $actual = $this->sut->generate4DigitWithoutRepetitions();
 
-        $this->assertGreaterThan(999, $actual);
-        $this->assertLessThan(10000, $actual);
+        $this->assertEquals($expected, strlen((string)$actual));
     }
+
 }
