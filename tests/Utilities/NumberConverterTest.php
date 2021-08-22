@@ -15,12 +15,12 @@ class NumberConverterTest extends TestCase
     public function testConvertToDigit()
     {
         $number = 1234;
-        $expected = [1,2,3,4];
+        $expected = [1, 2, 3, 4];
+        $this->sut = new NumberConverter();
 
-        $actual = $this->sut->convertToDigits($number);
+        $actual = $this->sut->toDigits($number);
 
         $this->assertEquals($expected, $actual);
-
     }
 
 }
