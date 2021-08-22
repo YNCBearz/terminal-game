@@ -2,22 +2,22 @@
 
 namespace Tests\Utilities;
 
-use App\Utilities\DigitGenerator;
+use App\Utilities\NumberGenerator;
 use PHPUnit\Framework\TestCase;
 
-class DigitGeneratorTest extends TestCase
+class NumberGeneratorTest extends TestCase
 {
     /**
-     * @var DigitGenerator $sut
+     * @var NumberGenerator $sut
      */
-    protected DigitGenerator $sut;
+    protected NumberGenerator $sut;
 
     /**
      * @test
      */
-    public function Should_ReturnWithoutRepetition_When_Generate4DigitWithoutRepetitions()
+    public function Should_ReturnWithoutRepetition_When_Generate4DigitNumberWithoutRepetitions()
     {
-        $this->sut = new DigitGenerator();
+        $this->sut = new NumberGenerator();
 
         $expected = 4;
 

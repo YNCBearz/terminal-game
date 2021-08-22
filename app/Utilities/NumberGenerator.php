@@ -2,7 +2,7 @@
 
 namespace App\Utilities;
 
-class DigitGenerator
+class NumberGenerator
 {
     public function generate4DigitNumberWithoutRepetitions(): int
     {
