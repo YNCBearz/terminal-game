@@ -12,14 +12,38 @@ class NumberConverterTest extends TestCase
      */
     protected NumberConverter $sut;
 
-    public function testConvertToDigit()
+    /**
+     * @param int $number
+     * @param array $expected
+     * @dataProvider toDigitsCase
+     */
+    public function testToDigits(int $number, array $expected)
     {
-        $number = 1234;
-        $expected = [1, 2, 3, 4];
         $this->sut = new NumberConverter();
 
-        $actual = $this->sut->toDigits($number);
+        $this->digitsShouldBe($number, $expected);
+    }
 
+    /**
+     * @return array
+     */
+    public function toDigitsCase(): array
+    {
+        return [
+            [
+                1234,
+                [1, 2, 3, 4],
+            ],
+        ];
+    }
+
+    /**
+     * @param int $number
+     * @param array $expected
+     */
+    private function digitsShouldBe(int $number, array $expected): void
+    {
+        $actual = $this->sut->toDigits($number);
         $this->assertEquals($expected, $actual);
     }
 
