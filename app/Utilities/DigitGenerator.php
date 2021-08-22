@@ -4,7 +4,7 @@ namespace App\Utilities;
 
 class DigitGenerator
 {
-    public function generate4DigitWithoutRepetitions(): int
+    public function generate4DigitNumberWithoutRepetitions(): int
     {
         $possibleDigits = range(0, 9);
         shuffle($possibleDigits);

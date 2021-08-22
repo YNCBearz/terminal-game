@@ -21,15 +21,15 @@ class DigitGeneratorTest extends TestCase
 
         $expected = 4;
 
-        $fourDigits = $this->sut->generate4DigitWithoutRepetitions();
+        $number = $this->sut->generate4DigitNumberWithoutRepetitions();
 
-        $selectedNumbers = [];
-        $selectedNumbers[] = ($fourDigits / 1000 % 10);
-        $selectedNumbers[] = ($fourDigits / 100 % 10);
-        $selectedNumbers[] = ($fourDigits / 10 % 10);
-        $selectedNumbers[] = ($fourDigits / 1 % 10);
+        $digits = [];
+        $digits[] = ($number / 1000 % 10);
+        $digits[] = ($number / 100 % 10);
+        $digits[] = ($number / 10 % 10);
+        $digits[] = ($number / 1 % 10);
 
-        $uniqueNumbers = array_unique($selectedNumbers);
-        $this->assertEquals(count($uniqueNumbers), $expected, "4-digit number (repetition): $fourDigits");
+        $uniqueNumbers = array_unique($digits);
+        $this->assertEquals(count($uniqueNumbers), $expected, "4-digit number (repetition): $number");
     }
 }
