@@ -86,6 +86,7 @@ class GuessNumberGame
 
             if ($this->isGameSet($guessResult)) {
                 $this->displayGameSetInfo();
+
                 return;
             }
 
@@ -189,7 +190,7 @@ class GuessNumberGame
 
     private function displayErrorInputMessage(): void
     {
-        Brush::paintOnConsole("Please enter a 4-digit number:", ForegroundColors::RED);
+        Brush::paintOnConsole("Please enter a 4-digit number (digits must be all different):", ForegroundColors::RED);
     }
 
     /**
@@ -198,6 +199,8 @@ class GuessNumberGame
      */
     private function isErrorInput(string $guessNumber): bool
     {
-        return strlen($guessNumber) != 4 || !is_numeric($guessNumber);
+        return strlen($guessNumber) != 4 ||
+            !is_numeric($guessNumber) ||
+            count(array_unique(str_split($guessNumber))) != 4;
     }
 }
