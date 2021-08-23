@@ -5,6 +5,7 @@ namespace App\Games;
 use App\Elements\WordWithColor;
 use App\Enums\Colors\BackgroundColors;
 use App\Enums\Colors\ForegroundColors;
+use App\Helpers\DigitChecker;
 use App\Utilities\Brush;
 use App\Utilities\NumberGenerator;
 
@@ -12,7 +13,9 @@ class GuessNumberGame
 {
     protected array $options;
     protected bool $isDisplayForHelp;
-    protected int $secretNumber;
+
+    protected array $guessRecords = [];
+    protected int $guessTimes = 1;
 
     public function __construct(array $options)
     {
@@ -25,6 +28,8 @@ class GuessNumberGame
     {
         if ($this->isDisplayForHelp) {
             $this->displayForHelp();
+
+            return;
         }
 
         $this->pressStart();
@@ -58,17 +63,89 @@ class GuessNumberGame
 
     private function hostGame()
     {
-        //產生4個不重複的數字
-        $this->secretNumber = NumberGenerator::generate4DigitNumberWithoutRepetitions();
+        if ($this->isTestingEnv()) {
+            return;
+        }
 
-        //檢查input是4個不重複的數字
-//        $inputNumber = readline("> ");
+        $secretNumber = NumberGenerator::generate4DigitNumberWithoutRepetitions();
 
-        //判斷1A2B
+        $guessResult = '0A0B';
 
-        //4A => Game End
+        while ($guessResult != '4A0B') {
+            /**
+             * @todo 檢查input是4個不重複的數字
+             */
+            $guessNumber = (int)readline("> ");
 
-        //else => 回傳目前猜的結果
+            $digitChecker = new DigitChecker($secretNumber, $guessNumber);
+            $guessResult = $digitChecker->getResult();
 
+            if ($guessResult == '4A0B') {
+                Brush::paintOnConsole("You win!!!", ForegroundColors::BROWN);
+                return;
+            }
+
+            Brush::paintMultiWordsOnConsole(
+                [
+                    new WordWithColor("Guess"),
+                    new WordWithColor("    Result"),
+                ]
+            );
+
+            if ($this->isGuessRecordsExists()) {
+                $this->displayGuessRecords();
+            }
+
+            Brush::paintMultiWordsOnConsole(
+                [
+                    new WordWithColor("$guessNumber", ForegroundColors::LIGHT_GREEN),
+                    new WordWithColor("     $guessResult", ForegroundColors::LIGHT_CYAN),
+                ]
+            );
+
+            $this->saveGuessRecord($guessNumber, $guessResult);
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    private function isTestingEnv(): bool
+    {
+        if (!isset($_ENV['APP_ENV'])) {
+            $_ENV['APP_ENV'] = getenv('APP_ENV');
+        }
+
+        return $_ENV['APP_ENV'] == 'testing';
+    }
+
+    /**
+     * @param int $guessNumber
+     * @param string $guessResult
+     */
+    private function saveGuessRecord(int $guessNumber, string $guessResult): void
+    {
+        $this->guessRecords[$guessNumber] = $guessResult;
+        $this->guessTimes++;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isGuessRecordsExists(): bool
+    {
+        return count($this->guessRecords) > 0;
+    }
+
+    private function displayGuessRecords(): void
+    {
+        foreach ($this->guessRecords as $guessNumberRecord => $guessResultRecord) {
+            Brush::paintMultiWordsOnConsole(
+                [
+                    new WordWithColor("$guessNumberRecord", ForegroundColors::LIGHT_GREEN),
+                    new WordWithColor("     $guessResultRecord", ForegroundColors::LIGHT_CYAN),
+                ]
+            );
+        }
     }
 }
