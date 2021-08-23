@@ -48,7 +48,22 @@ class DigitChecker
      */
     public function cowCounts(): int
     {
-        return 0;
+        $secretNumber = $this->secretNumber;
+        $guessNumber = $this->guessNumber;
+
+        $secretDigits = NumberConverter::toDigits($secretNumber);
+        $guessDigits = NumberConverter::toDigits($guessNumber);
+
+        for ($i = 0; $i < count($secretDigits); $i++) {
+            if ($secretDigits[$i] == $guessDigits[$i]) {
+                unset($secretDigits[$i]);
+                unset($guessDigits[$i]);
+            }
+        }
+
+        $intersect = array_intersect($secretDigits, $guessDigits);
+
+        return count($intersect);
     }
 
 }

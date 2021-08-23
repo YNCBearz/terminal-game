@@ -53,6 +53,11 @@ class DigitCheckerTest extends TestCase
                 1567,
                 0,
             ],
+            [
+                1234,
+                1432,
+                2,
+            ],
         ];
     }
 }
