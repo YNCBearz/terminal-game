@@ -71,38 +71,32 @@ class GuessNumberGame
 
         $guessResult = '0A0B';
 
-        while ($guessResult != '4A0B') {
-            /**
-             * @todo 檢查input是4個不重複的數字
-             */
+        while (!$this->isGameSet($guessResult)) {
             $guessNumber = readline("> ");
 
-            $digitChecker = new DigitChecker($secretNumber, $guessNumber);
-            $guessResult = $digitChecker->getResult();
-
-            if ($guessResult == '4A0B') {
-                Brush::paintOnConsole("You win!!!", ForegroundColors::BROWN);
+            if ($guessNumber == 'exit') {
                 return;
             }
 
-            Brush::paintMultiWordsOnConsole(
-                [
-                    new WordWithColor("Guess"),
-                    new WordWithColor("    Result"),
-                ]
-            );
+            if ($this->isErrorInput($guessNumber)) {
+                $this->displayErrorInputMessage();
+                continue;
+            }
+
+            $guessResult = $this->getGuessResult($secretNumber, $guessNumber);
+
+            if ($this->isGameSet($guessResult)) {
+                $this->displayGameSetInfo();
+                return;
+            }
+
+            $this->displayColumns();
 
             if ($this->isGuessRecordsExists()) {
                 $this->displayGuessRecords();
             }
 
-            Brush::paintMultiWordsOnConsole(
-                [
-                    new WordWithColor("$guessNumber", ForegroundColors::LIGHT_GREEN),
-                    new WordWithColor("     $guessResult", ForegroundColors::LIGHT_CYAN),
-                ]
-            );
-
+            $this->displayGuessRecord($guessNumber, $guessResult);
             $this->saveGuessRecord($guessNumber, $guessResult);
         }
     }
@@ -120,10 +114,10 @@ class GuessNumberGame
     }
 
     /**
-     * @param int $guessNumber
+     * @param string $guessNumber
      * @param string $guessResult
      */
-    private function saveGuessRecord(int $guessNumber, string $guessResult): void
+    private function saveGuessRecord(string $guessNumber, string $guessResult): void
     {
         $this->guessRecords[$guessNumber] = $guessResult;
         $this->guessTimes++;
@@ -140,12 +134,71 @@ class GuessNumberGame
     private function displayGuessRecords(): void
     {
         foreach ($this->guessRecords as $guessNumberRecord => $guessResultRecord) {
-            Brush::paintMultiWordsOnConsole(
-                [
-                    new WordWithColor("$guessNumberRecord", ForegroundColors::LIGHT_GREEN),
-                    new WordWithColor("     $guessResultRecord", ForegroundColors::LIGHT_CYAN),
-                ]
-            );
+            $this->displayGuessRecord($guessNumberRecord, $guessResultRecord);
         }
+    }
+
+    /**
+     * @param string $guessResult
+     * @return bool
+     */
+    private function isGameSet(string $guessResult): bool
+    {
+        return $guessResult == '4A0B';
+    }
+
+    private function displayGameSetInfo(): void
+    {
+        Brush::paintOnConsole("You win! (guess times: $this->guessTimes)", ForegroundColors::BROWN);
+    }
+
+    /**
+     * @param string $secretNumber
+     * @param string $guessNumber
+     * @return string
+     */
+    private function getGuessResult(string $secretNumber, string $guessNumber): string
+    {
+        $digitChecker = new DigitChecker($secretNumber, $guessNumber);
+
+        return $digitChecker->getResult();
+    }
+
+    private function displayColumns(): void
+    {
+        Brush::paintMultiWordsOnConsole(
+            [
+                new WordWithColor("Guess"),
+                new WordWithColor("    Result"),
+            ]
+        );
+    }
+
+    /**
+     * @param string $guessNumber
+     * @param string $guessResult
+     */
+    private function displayGuessRecord(string $guessNumber, string $guessResult): void
+    {
+        Brush::paintMultiWordsOnConsole(
+            [
+                new WordWithColor("$guessNumber", ForegroundColors::LIGHT_GREEN),
+                new WordWithColor("     $guessResult", ForegroundColors::LIGHT_CYAN),
+            ]
+        );
+    }
+
+    private function displayErrorInputMessage(): void
+    {
+        Brush::paintOnConsole("Please enter a 4-digit number:", ForegroundColors::RED);
+    }
+
+    /**
+     * @param string $guessNumber
+     * @return bool
+     */
+    private function isErrorInput(string $guessNumber): bool
+    {
+        return strlen($guessNumber) != 4 || !is_numeric($guessNumber);
     }
 }
