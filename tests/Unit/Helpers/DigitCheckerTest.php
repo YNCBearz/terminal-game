@@ -44,6 +44,16 @@ class DigitCheckerTest extends TestCase
                 5678,
                 '0A0B',
             ],
+            [
+                1234,
+                1324,
+                '2A2B',
+            ],
         ];
     }
+
+
+
+
+
 }

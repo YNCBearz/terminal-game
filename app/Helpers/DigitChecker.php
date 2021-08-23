@@ -54,14 +54,18 @@ class DigitChecker
         $secretDigits = NumberConverter::toDigits($secretNumber);
         $guessDigits = NumberConverter::toDigits($guessNumber);
 
+        $differentSecretDigits = [];
+        $differentGuessDigits = [];
         for ($i = 0; $i < count($secretDigits); $i++) {
             if ($secretDigits[$i] == $guessDigits[$i]) {
-                unset($secretDigits[$i]);
-                unset($guessDigits[$i]);
+                continue;
             }
+
+            $differentSecretDigits[] = $secretDigits[$i];
+            $differentGuessDigits[] = $guessDigits[$i];
         }
 
-        $intersect = array_intersect($secretDigits, $guessDigits);
+        $intersect = array_intersect($differentSecretDigits, $differentGuessDigits);
 
         return count($intersect);
     }
