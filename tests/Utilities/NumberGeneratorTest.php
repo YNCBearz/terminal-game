@@ -8,20 +8,13 @@ use PHPUnit\Framework\TestCase;
 class NumberGeneratorTest extends TestCase
 {
     /**
-     * @var NumberGenerator $sut
-     */
-    protected NumberGenerator $sut;
-
-    /**
      * @test
      */
     public function Should_ReturnWithoutRepetition_When_Generate4DigitNumberWithoutRepetitions()
     {
-        $this->sut = new NumberGenerator();
-
         $expected = 4;
 
-        $number = $this->sut->generate4DigitNumberWithoutRepetitions();
+        $number = NumberGenerator::generate4DigitNumberWithoutRepetitions();
 
         $digits = [];
         $digits[] = ($number / 1000 % 10);
