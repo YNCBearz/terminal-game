@@ -20,4 +20,7 @@
             <html outputDirectory="./reports/html-coverage" lowUpperBound="50" highLowerBound="90"/>
         </report>
     </coverage>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+    </php>
 </phpunit>
