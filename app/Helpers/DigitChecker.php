@@ -43,4 +43,12 @@ class DigitChecker
         return $result;
     }
 
+    /**
+     * @return int
+     */
+    public function cowCounts(): int
+    {
+        return 0;
+    }
+
 }
