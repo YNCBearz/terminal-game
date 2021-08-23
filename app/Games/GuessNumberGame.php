@@ -3,7 +3,6 @@
 namespace App\Games;
 
 use App\Elements\WordWithColor;
-use App\Enums\Colors\BackgroundColors;
 use App\Enums\Colors\ForegroundColors;
 use App\Helpers\DigitChecker;
 use App\Utilities\Brush;
@@ -182,8 +181,8 @@ class GuessNumberGame
     {
         Brush::paintMultiWordsOnConsole(
             [
-                new WordWithColor("$guessNumber", ForegroundColors::LIGHT_GREEN),
-                new WordWithColor("     $guessResult", ForegroundColors::LIGHT_CYAN),
+                new WordWithColor("$guessNumber", ForegroundColors::CYAN),
+                new WordWithColor("     $guessResult", ForegroundColors::LIGHT_RED),
             ]
         );
     }
