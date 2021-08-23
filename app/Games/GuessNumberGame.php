@@ -6,20 +6,15 @@ use App\Elements\WordWithColor;
 use App\Enums\Colors\BackgroundColors;
 use App\Enums\Colors\ForegroundColors;
 use App\Utilities\Brush;
+use App\Utilities\NumberGenerator;
 
 class GuessNumberGame
 {
-    /**
-     * @var array $options
-     */
     protected array $options;
-
-    /**
-     * @var bool $isDisplayForHelp
-     */
     protected bool $isDisplayForHelp;
+    protected int $secretNumber;
 
-    public function __construct($options)
+    public function __construct(array $options)
     {
         $this->options = $options;
 
@@ -64,6 +59,7 @@ class GuessNumberGame
     private function hostGame()
     {
         //產生4個不重複的數字
+        $this->secretNumber = NumberGenerator::generate4DigitNumberWithoutRepetitions();
 
         //檢查input是4個不重複的數字
 //        $inputNumber = readline("> ");
@@ -73,8 +69,6 @@ class GuessNumberGame
         //4A => Game End
 
         //else => 回傳目前猜的結果
-
-
 
     }
 }

@@ -13,61 +13,37 @@ class DigitCheckerTest extends TestCase
     protected DigitChecker $sut;
 
     /**
-     * @dataProvider bullCountsCase
+     * @param int $secretNumber
+     * @param int $guessNumber
+     * @param string $expected
+     *
+     * @dataProvider digitsCase
      */
-    public function testBullCounts($secretNumber, $guessNumber, $expected)
+    public function testGetResult(int $secretNumber, int $guessNumber, string $expected)
     {
         $this->sut = new DigitChecker($secretNumber, $guessNumber);
-
-        $actual = $this->sut->bullCounts();
-        $this->assertEquals($actual, $expected);
-    }
-
-    public function bullCountsCase(): array
-    {
-        return [
-            [
-                1234,
-                1567,
-                1,
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider cowCountsCase
-     */
-    public function testCowCounts($secretNumber, $guessNumber, $expected)
-    {
-        $this->sut = new DigitChecker($secretNumber, $guessNumber);
-
-        $actual = $this->sut->cowCounts();
-        $this->assertEquals($actual, $expected);
-    }
-
-    public function cowCountsCase(): array
-    {
-        return [
-            [
-                1234,
-                1567,
-                0,
-            ],
-            [
-                1234,
-                1432,
-                2,
-            ],
-        ];
-    }
-
-    public function testGetResult()
-    {
-        $this->sut = new DigitChecker(1234, 1256);
-        $expected = '2A0B';
 
         $actual = $this->sut->getResult();
 
         $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @return array
+     */
+    public function digitsCase(): array
+    {
+        return [
+            [
+                1234,
+                1256,
+                '2A0B',
+            ],
+            [
+                1234,
+                5678,
+                '0A0B',
+            ],
+        ];
     }
 }

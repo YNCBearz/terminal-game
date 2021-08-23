@@ -25,7 +25,7 @@ class DigitChecker
     /**
      * @return int
      */
-    public function bullCounts(): int
+    private function bullCounts(): int
     {
         $secretNumber = $this->secretNumber;
         $guessNumber = $this->guessNumber;
@@ -46,7 +46,7 @@ class DigitChecker
     /**
      * @return int
      */
-    public function cowCounts(): int
+    private function cowCounts(): int
     {
         $secretNumber = $this->secretNumber;
         $guessNumber = $this->guessNumber;
