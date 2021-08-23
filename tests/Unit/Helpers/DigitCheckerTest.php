@@ -34,15 +34,25 @@ class DigitCheckerTest extends TestCase
         ];
     }
 
-    public function testCowCounts()
+    /**
+     * @dataProvider cowCountsCase
+     */
+    public function testCowCounts($secretNumber, $guessNumber, $expected)
     {
-        $secretNumber = 1234;
-        $guessNumber = 1567;
-        $expected = 0;
-
         $this->sut = new DigitChecker($secretNumber, $guessNumber);
 
         $actual = $this->sut->cowCounts();
         $this->assertEquals($actual, $expected);
+    }
+
+    public function cowCountsCase(): array
+    {
+        return [
+            [
+                1234,
+                1567,
+                0,
+            ],
+        ];
     }
 }
