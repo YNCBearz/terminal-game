@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Utilities;
+namespace Tests\Unit\Utilities;
 
 use App\Utilities\NumberGenerator;
 use PHPUnit\Framework\TestCase;

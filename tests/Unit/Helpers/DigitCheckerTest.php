@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Utilities;
+namespace Tests\Unit\Helpers;
 
 use App\Helpers\DigitChecker;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +21,6 @@ class DigitCheckerTest extends TestCase
         $this->sut = new DigitChecker($secretNumber, $guessNumber);
 
         $actual = $this->sut->bullCounts();
-
         $this->assertEquals($actual, $expected);
     }
 
