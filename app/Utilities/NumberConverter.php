@@ -4,7 +4,7 @@ namespace App\Utilities;
 
 class NumberConverter
 {
-    public function toDigits(int $number): array
+    public static function toDigits(int $number): array
     {
         $result = [];
 

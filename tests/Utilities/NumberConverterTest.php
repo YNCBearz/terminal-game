@@ -8,19 +8,12 @@ use PHPUnit\Framework\TestCase;
 class NumberConverterTest extends TestCase
 {
     /**
-     * @var NumberConverter $sut
-     */
-    protected NumberConverter $sut;
-
-    /**
      * @param int $number
      * @param array $expected
      * @dataProvider toDigitsCase
      */
     public function testToDigits(int $number, array $expected)
     {
-        $this->sut = new NumberConverter();
-
         $this->digitsShouldBe($number, $expected);
     }
 
@@ -34,6 +27,10 @@ class NumberConverterTest extends TestCase
                 1234,
                 [1, 2, 3, 4],
             ],
+            [
+                13579,
+                [1, 3, 5, 7, 9],
+            ],
         ];
     }
 
@@ -43,7 +40,7 @@ class NumberConverterTest extends TestCase
      */
     private function digitsShouldBe(int $number, array $expected): void
     {
-        $actual = $this->sut->toDigits($number);
+        $actual = NumberConverter::toDigits($number);
         $this->assertEquals($expected, $actual);
     }
 
