@@ -4,15 +4,12 @@ namespace App\Utilities;
 
 class NumberConverter
 {
-    public static function toDigits(int $number): array
+    /**
+     * @param string $number
+     * @return array
+     */
+    public static function toDigits(string $number): array
     {
-        $result = [];
-
-        while ($number % 10 > 0) {
-            $result[] = ($number % 10);
-            $number = $number / 10;
-        }
-
-        return array_reverse($result);
+        return str_split($number);
     }
 }

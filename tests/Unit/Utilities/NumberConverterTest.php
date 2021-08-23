@@ -8,11 +8,11 @@ use PHPUnit\Framework\TestCase;
 class NumberConverterTest extends TestCase
 {
     /**
-     * @param int $number
+     * @param string $number
      * @param array $expected
      * @dataProvider toDigitsCase
      */
-    public function testToDigits(int $number, array $expected)
+    public function testToDigits(string $number, array $expected)
     {
         $this->digitsShouldBe($number, $expected);
     }
@@ -24,21 +24,29 @@ class NumberConverterTest extends TestCase
     {
         return [
             [
-                1234,
+                "1234",
                 [1, 2, 3, 4],
             ],
             [
-                13579,
+                "13579",
                 [1, 3, 5, 7, 9],
+            ],
+            [
+                "0135",
+                [0, 1, 3, 5],
+            ],
+            [
+                "0789",
+                [0, 7, 8, 9],
             ],
         ];
     }
 
     /**
-     * @param int $number
+     * @param string $number
      * @param array $expected
      */
-    private function digitsShouldBe(int $number, array $expected): void
+    private function digitsShouldBe(string $number, array $expected): void
     {
         $actual = NumberConverter::toDigits($number);
         $this->assertEquals($expected, $actual);
