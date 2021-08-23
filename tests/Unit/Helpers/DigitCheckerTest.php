@@ -60,4 +60,14 @@ class DigitCheckerTest extends TestCase
             ],
         ];
     }
+
+    public function testGetResult()
+    {
+        $this->sut = new DigitChecker(1234, 1256);
+        $expected = '2A0B';
+
+        $actual = $this->sut->getResult();
+
+        $this->assertEquals($expected, $actual);
+    }
 }

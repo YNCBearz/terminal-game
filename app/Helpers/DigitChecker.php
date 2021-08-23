@@ -66,4 +66,15 @@ class DigitChecker
         return count($intersect);
     }
 
+    /**
+     * @return string (ex. 0A2B)
+     */
+    public function getResult(): string
+    {
+        $bullCounts = $this->bullCounts();
+        $cowCounts = $this->cowCounts();
+
+        return $bullCounts.'A'.$cowCounts.'B';
+    }
+
 }
