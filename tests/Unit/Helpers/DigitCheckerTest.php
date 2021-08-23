@@ -12,16 +12,26 @@ class DigitCheckerTest extends TestCase
      */
     protected DigitChecker $sut;
 
-    public function testBullCounts()
+    /**
+     * @dataProvider bullCountsCase
+     */
+    public function testBullCounts($secretNumber, $guessNumber, $expected)
     {
-        $secretNumber = 1234;
-        $guessNumber = 1567;
-        $expected = 1;
-
         $this->sut = new DigitChecker($secretNumber, $guessNumber);
 
         $actual = $this->sut->bullCounts();
         $this->assertEquals($actual, $expected);
+    }
+
+    public function bullCountsCase(): array
+    {
+        return [
+            [
+                1234,
+                1567,
+                1,
+            ],
+        ];
     }
 
 }
