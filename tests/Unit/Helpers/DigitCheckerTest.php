@@ -13,13 +13,13 @@ class DigitCheckerTest extends TestCase
     protected DigitChecker $sut;
 
     /**
-     * @param int $secretNumber
-     * @param int $guessNumber
+     * @param string $secretNumber
+     * @param string $guessNumber
      * @param string $expected
      *
      * @dataProvider digitsCase
      */
-    public function testGetResult(int $secretNumber, int $guessNumber, string $expected)
+    public function testGetResult(string $secretNumber, string $guessNumber, string $expected)
     {
         $this->sut = new DigitChecker($secretNumber, $guessNumber);
 
@@ -35,33 +35,33 @@ class DigitCheckerTest extends TestCase
     {
         return [
             [
-                1234,
-                1256,
+                "1234",
+                "1256",
                 '2A0B',
             ],
             [
-                1234,
-                5678,
+                "1234",
+                "5678",
                 '0A0B',
             ],
             [
-                1234,
-                1324,
+                "1234",
+                "1324",
                 '2A2B',
             ],
             [
-                1234,
-                1234,
+                "1234",
+                "1234",
                 '4A0B',
             ],
             [
-                1357,
-                2413,
+                "1357",
+                "2413",
                 '0A2B',
             ],
             [
-                1234,
-                1342,
+                "1234",
+                "1342",
                 '1A3B',
             ],
         ];

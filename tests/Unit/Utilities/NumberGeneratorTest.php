@@ -16,11 +16,7 @@ class NumberGeneratorTest extends TestCase
 
         $number = NumberGenerator::generate4DigitNumberWithoutRepetitions();
 
-        $digits = [];
-        $digits[] = ($number / 1000 % 10);
-        $digits[] = ($number / 100 % 10);
-        $digits[] = ($number / 10 % 10);
-        $digits[] = ($number / 1 % 10);
+        $digits = str_split($number);
 
         $uniqueNumbers = array_unique($digits);
         $this->assertEquals(count($uniqueNumbers), $expected, "4-digit number (repetition): $number");

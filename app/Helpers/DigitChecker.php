@@ -7,16 +7,16 @@ use App\Utilities\NumberConverter;
 class DigitChecker
 {
     /**
-     * @var int $secretNumber
+     * @var string $secretNumber
      */
-    protected int $secretNumber;
+    protected string $secretNumber;
 
     /**
-     * @var int $guessNumber
+     * @var string $guessNumber
      */
-    protected int $guessNumber;
+    protected string $guessNumber;
 
-    public function __construct(int $secretNumber, int $guessNumber)
+    public function __construct(string $secretNumber, string $guessNumber)
     {
         $this->secretNumber = $secretNumber;
         $this->guessNumber = $guessNumber;

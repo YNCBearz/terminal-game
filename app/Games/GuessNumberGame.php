@@ -75,7 +75,7 @@ class GuessNumberGame
             /**
              * @todo 檢查input是4個不重複的數字
              */
-            $guessNumber = (int)readline("> ");
+            $guessNumber = readline("> ");
 
             $digitChecker = new DigitChecker($secretNumber, $guessNumber);
             $guessResult = $digitChecker->getResult();
