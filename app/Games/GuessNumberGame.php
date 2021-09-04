@@ -17,6 +17,8 @@ class GuessNumberGame
     protected array $guessRecords = [];
     protected int $guessTimes = 1;
     protected int $length;
+    protected NumberGenerator $numberGenerator;
+    protected InputChecker $inputChecker;
 
     public function __construct(array $options)
     {
@@ -24,6 +26,9 @@ class GuessNumberGame
 
         $this->isDisplayForHelp = isset($options['help']) || isset($options['h']);
         $this->length = $this->resolveLength($options);
+
+        $this->numberGenerator = new NumberGenerator($this->length);
+        $this->inputChecker = new InputChecker($this->length);
     }
 
     public function init()
@@ -73,12 +78,10 @@ class GuessNumberGame
             return;
         }
 
-        $numberGenerator = new NumberGenerator($this->length);
-        $secretNumber = $numberGenerator->generateDigitNumberWithoutRepetitions();
-
+        $secretNumber = $this->numberGenerator->generateDigitNumberWithoutRepetitions();
+        
         $guessResult = '0A0B';
 
-        $inputChecker = new InputChecker($this->length);
 
         while (!$this->isGameSet($guessResult)) {
             $guessNumber = readline("> ");
@@ -87,7 +90,7 @@ class GuessNumberGame
                 return;
             }
 
-            if (!$inputChecker->isValid($guessNumber)) {
+            if (!$this->inputChecker->isValid($guessNumber)) {
                 $this->displayErrorInputMessage();
                 continue;
             }
