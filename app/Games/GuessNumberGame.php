@@ -159,9 +159,9 @@ class GuessNumberGame
      */
     private function getGuessResult(string $secretNumber, string $guessNumber): string
     {
-        $digitChecker = new GuessNumberChecker($secretNumber, $guessNumber);
+        $guessGameChecker = new GuessNumberChecker($secretNumber, $guessNumber);
 
-        return $digitChecker->getResult();
+        return $guessGameChecker->getResult();
     }
 
     private function displayColumns(): void
