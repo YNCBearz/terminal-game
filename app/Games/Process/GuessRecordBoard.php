@@ -12,6 +12,8 @@ class GuessRecordBoard
     protected array $records = [];
     protected int $length;
     protected int $guessTimes = 1;
+    protected float $startTime;
+    protected float $endTime;
 
     public function __construct(int $length = 4)
     {
@@ -89,5 +91,20 @@ class GuessRecordBoard
     public function getGuessTimes(): int
     {
         return $this->guessTimes;
+    }
+
+    public function beginTiming()
+    {
+        $this->startTime = microtime(true);
+    }
+
+    public function stopTiming()
+    {
+        $this->endTime = microtime(true);
+    }
+
+    public function getTiming(): float
+    {
+        return round($this->endTime - $this->startTime, 2);
     }
 }

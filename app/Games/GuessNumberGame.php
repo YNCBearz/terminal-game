@@ -98,7 +98,12 @@ class GuessNumberGame
 
             $guessResult = $this->getGuessResult($secretNumber, $guessNumber);
 
+            if (!$this->guessRecordBoard->isRecordsExists()) {
+                $this->guessRecordBoard->beginTiming();
+            }
+
             if ($this->isGameSet($guessResult)) {
+                $this->guessRecordBoard->stopTiming();
                 $this->displayGameSetInfo();
 
                 return;
@@ -143,7 +148,9 @@ class GuessNumberGame
     private function displayGameSetInfo(): void
     {
         $guessTimes = $this->guessRecordBoard->getGuessTimes();
-        Brush::paintOnConsole("You win! (guess times: $guessTimes)", ForegroundColors::BROWN);
+        $timing = $this->guessRecordBoard->getTiming();
+
+        Brush::paintOnConsole("You win! (perf: $timing seconds | guess times: $guessTimes)", ForegroundColors::BROWN);
     }
 
     /**
