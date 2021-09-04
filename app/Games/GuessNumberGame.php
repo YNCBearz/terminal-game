@@ -178,10 +178,12 @@ class GuessNumberGame
 
     private function displayColumns(): void
     {
+        $blankTimes = $this->generateBlank(6);
+
         Brush::paintMultiWordsOnConsole(
             [
                 new WordWithColor("Guess"),
-                new WordWithColor("    Result"),
+                new WordWithColor("$blankTimes Result"),
             ]
         );
     }
@@ -192,10 +194,12 @@ class GuessNumberGame
      */
     private function displayGuessRecord(string $guessNumber, string $guessResult): void
     {
+        $blankTimes = $this->generateBlank(11 - $this->length);
+
         Brush::paintMultiWordsOnConsole(
             [
                 new WordWithColor("$guessNumber", ForegroundColors::CYAN),
-                new WordWithColor("     $guessResult", ForegroundColors::LIGHT_RED),
+                new WordWithColor("$blankTimes $guessResult", ForegroundColors::LIGHT_RED),
             ]
         );
     }
@@ -222,5 +226,14 @@ class GuessNumberGame
         }
 
         return isset($options['length']) ? (int)$options['length'] : $default;
+    }
+
+    /**
+     * @param int $times
+     * @return string
+     */
+    private function generateBlank(int $times): string
+    {
+        return str_repeat(' ', $times);
     }
 }
