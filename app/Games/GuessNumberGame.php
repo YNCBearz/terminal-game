@@ -16,13 +16,14 @@ class GuessNumberGame
 
     protected array $guessRecords = [];
     protected int $guessTimes = 1;
-    protected int $length = 4;
+    protected int $length;
 
     public function __construct(array $options)
     {
         $this->options = $options;
 
         $this->isDisplayForHelp = isset($options['help']) || isset($options['h']);
+        $this->length = isset($options['l']) ? (int) $options['l'] : 4;
     }
 
     public function init()
@@ -47,8 +48,10 @@ class GuessNumberGame
         Brush::paintMultiWordsOnConsole(
             [
                 new WordWithColor("  -h, --help", ForegroundColors::GREEN),
-                new WordWithColor("     Display help for the given command."),
-            ]
+                new WordWithColor("         Display help for the given command. \n"),
+                new WordWithColor("  -l, --length", ForegroundColors::GREEN),
+                new WordWithColor("       Setting for the digit number (default: 4)."),
+            ],
         );
     }
 
