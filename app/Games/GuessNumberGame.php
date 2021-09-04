@@ -4,7 +4,7 @@ namespace App\Games;
 
 use App\Elements\WordWithColor;
 use App\Enums\Colors\ForegroundColors;
-use App\Helpers\DigitChecker;
+use App\Helpers\GuessNumberChecker;
 use App\Utilities\Brush;
 use App\Utilities\NumberGenerator;
 
@@ -97,7 +97,7 @@ class GuessNumberGame
             }
 
             $this->displayGuessRecord($guessNumber, $guessResult);
-            $this->saveGuessRecord($guessNumber, $guessResult);
+            $this->writeDownGuessRecord($guessNumber, $guessResult);
         }
     }
 
@@ -117,7 +117,7 @@ class GuessNumberGame
      * @param string $guessNumber
      * @param string $guessResult
      */
-    private function saveGuessRecord(string $guessNumber, string $guessResult): void
+    private function writeDownGuessRecord(string $guessNumber, string $guessResult): void
     {
         $this->guessRecords[$guessNumber] = $guessResult;
         $this->guessTimes++;
@@ -159,7 +159,7 @@ class GuessNumberGame
      */
     private function getGuessResult(string $secretNumber, string $guessNumber): string
     {
-        $digitChecker = new DigitChecker($secretNumber, $guessNumber);
+        $digitChecker = new GuessNumberChecker($secretNumber, $guessNumber);
 
         return $digitChecker->getResult();
     }

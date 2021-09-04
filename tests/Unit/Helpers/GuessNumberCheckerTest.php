@@ -2,15 +2,15 @@
 
 namespace Tests\Unit\Helpers;
 
-use App\Helpers\DigitChecker;
+use App\Helpers\GuessNumberChecker;
 use PHPUnit\Framework\TestCase;
 
-class DigitCheckerTest extends TestCase
+class GuessNumberCheckerTest extends TestCase
 {
     /**
-     * @var DigitChecker $sut
+     * @var GuessNumberChecker $sut
      */
-    protected DigitChecker $sut;
+    protected GuessNumberChecker $sut;
 
     /**
      * @param string $secretNumber
@@ -21,7 +21,7 @@ class DigitCheckerTest extends TestCase
      */
     public function testGetResult(string $secretNumber, string $guessNumber, string $expected)
     {
-        $this->sut = new DigitChecker($secretNumber, $guessNumber);
+        $this->sut = new GuessNumberChecker($secretNumber, $guessNumber);
 
         $actual = $this->sut->getResult();
 

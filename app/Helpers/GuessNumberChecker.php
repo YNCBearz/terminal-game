@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use App\Utilities\NumberConverter;
 
-class DigitChecker
+class GuessNumberChecker
 {
     /**
      * @var string $secretNumber
