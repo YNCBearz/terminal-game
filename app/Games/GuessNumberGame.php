@@ -2,6 +2,7 @@
 
 namespace App\Games;
 
+use App\Elements\GuessRecord;
 use App\Elements\WordWithColor;
 use App\Enums\Colors\ForegroundColors;
 use App\Games\Process\GuessRecordBoard;
@@ -15,8 +16,6 @@ class GuessNumberGame
     protected array $options;
     protected bool $isDisplayForHelp;
 
-    protected array $guessRecords = [];
-    protected int $guessTimes = 1;
     protected int $length;
     protected NumberGenerator $numberGenerator;
     protected InputChecker $inputChecker;
@@ -107,12 +106,14 @@ class GuessNumberGame
 
             $this->guessRecordBoard->displayColumns();
 
-            if ($this->isGuessRecordsExists()) {
-                $this->displayGuessRecords();
+            if ($this->guessRecordBoard->isRecordsExists()) {
+                $this->guessRecordBoard->displayRecords();
             }
 
-            $this->displayGuessRecord($guessNumber, $guessResult);
-            $this->writeDownGuessRecord($guessNumber, $guessResult);
+            $record = new GuessRecord($guessNumber, $guessResult);
+
+            $this->guessRecordBoard->displayRecord($record);
+            $this->guessRecordBoard->writeDownRecord($record);
         }
     }
 
@@ -129,31 +130,6 @@ class GuessNumberGame
     }
 
     /**
-     * @param string $guessNumber
-     * @param string $guessResult
-     */
-    private function writeDownGuessRecord(string $guessNumber, string $guessResult): void
-    {
-        $this->guessRecords[$guessNumber] = $guessResult;
-        $this->guessTimes++;
-    }
-
-    /**
-     * @return bool
-     */
-    private function isGuessRecordsExists(): bool
-    {
-        return count($this->guessRecords) > 0;
-    }
-
-    private function displayGuessRecords(): void
-    {
-        foreach ($this->guessRecords as $guessNumberRecord => $guessResultRecord) {
-            $this->displayGuessRecord($guessNumberRecord, $guessResultRecord);
-        }
-    }
-
-    /**
      * @param string $guessResult
      * @return bool
      */
@@ -166,7 +142,8 @@ class GuessNumberGame
 
     private function displayGameSetInfo(): void
     {
-        Brush::paintOnConsole("You win! (guess times: $this->guessTimes)", ForegroundColors::BROWN);
+        $guessTimes = $this->guessRecordBoard->getGuessTimes();
+        Brush::paintOnConsole("You win! (guess times: $guessTimes)", ForegroundColors::BROWN);
     }
 
     /**
@@ -179,22 +156,6 @@ class GuessNumberGame
         $guessGameChecker = new GuessNumberChecker($secretNumber, $guessNumber);
 
         return $guessGameChecker->getResult();
-    }
-
-    /**
-     * @param string $guessNumber
-     * @param string $guessResult
-     */
-    private function displayGuessRecord(string $guessNumber, string $guessResult): void
-    {
-        $blankTimes = $this->generateBlank(11 - $this->length);
-
-        Brush::paintMultiWordsOnConsole(
-            [
-                new WordWithColor("$guessNumber", ForegroundColors::CYAN),
-                new WordWithColor("$blankTimes $guessResult", ForegroundColors::LIGHT_RED),
-            ]
-        );
     }
 
     private function displayErrorInputMessage(): void
@@ -223,15 +184,6 @@ class GuessNumberGame
         }
 
         return $default;
-    }
-
-    /**
-     * @param int $times
-     * @return string
-     */
-    private function generateBlank(int $times): string
-    {
-        return str_repeat(' ', $times);
     }
 
     /**

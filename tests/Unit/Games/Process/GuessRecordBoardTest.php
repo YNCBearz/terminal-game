@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Games\Process;
 
+use App\Elements\GuessRecord;
 use App\Games\Process\GuessRecordBoard;
 use PHPUnit\Framework\TestCase;
 
@@ -27,7 +28,8 @@ class GuessRecordBoardTest extends TestCase
     public function GivenGuessRecordBoardWithRecords_WhenIsRecordsExists_ReturnFalse()
     {
         $this->sut = new GuessRecordBoard();
-        $this->sut->pushRecords(['1234' => '0A2B']);
+        $record = new GuessRecord('1234', '0A2B');
+        $this->sut->pushRecords($record);
 
         $actual = $this->sut->isRecordsExists();
 
