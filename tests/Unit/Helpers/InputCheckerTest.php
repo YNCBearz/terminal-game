@@ -23,5 +23,19 @@ class InputCheckerTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
+    /**
+     * @test
+     */
+    public function GivenNotNumeric_WhenIsValid_ReturnFalse()
+    {
+        $this->sut = new InputChecker(4);
+        $guessNumber = 'bear';
+        $expected = false;
+
+        $actual = $this->sut->isValid($guessNumber);
+
+        $this->assertEquals($expected, $actual);
+    }
+
 
 }

@@ -32,6 +32,7 @@ class InputChecker
     {
         $length = $this->length;
 
-        return strlen($guessNumber) == $length;
+        return strlen($guessNumber) == $length &&
+            is_numeric($guessNumber);
     }
 }
