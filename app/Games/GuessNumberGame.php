@@ -221,11 +221,15 @@ class GuessNumberGame
     {
         $default = 4;
 
-        if (isset($options['l'])) {
+        if (isset($options['l']) && $this->isValidLength($options['l'])) {
             return (int)$options['l'];
         }
 
-        return isset($options['length']) ? (int)$options['length'] : $default;
+        if (isset($options['length']) && $this->isValidLength($options['length'])) {
+            return (int)$options['length'];
+        }
+
+        return $default;
     }
 
     /**
@@ -235,5 +239,18 @@ class GuessNumberGame
     private function generateBlank(int $times): string
     {
         return str_repeat(' ', $times);
+    }
+
+    /**
+     * @param string $length
+     * @return bool
+     */
+    private function isValidLength(string $length): bool
+    {
+        if (!is_numeric($length) || $length < 1 || $length > 10) {
+            return false;
+        }
+
+        return true;
     }
 }
