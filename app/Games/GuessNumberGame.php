@@ -4,6 +4,7 @@ namespace App\Games;
 
 use App\Elements\WordWithColor;
 use App\Enums\Colors\ForegroundColors;
+use App\Games\Process\GuessRecordBoard;
 use App\Helpers\GuessNumberChecker;
 use App\Helpers\InputChecker;
 use App\Utilities\Brush;
@@ -19,6 +20,7 @@ class GuessNumberGame
     protected int $length;
     protected NumberGenerator $numberGenerator;
     protected InputChecker $inputChecker;
+    protected GuessRecordBoard $guessRecordBoard;
 
     public function __construct(array $options)
     {
@@ -29,6 +31,7 @@ class GuessNumberGame
 
         $this->numberGenerator = new NumberGenerator($this->length);
         $this->inputChecker = new InputChecker($this->length);
+        $this->guessRecordBoard = new GuessRecordBoard($this->length);
     }
 
     public function init()
@@ -79,9 +82,8 @@ class GuessNumberGame
         }
 
         $secretNumber = $this->numberGenerator->generateDigitNumberWithoutRepetitions();
-        
-        $guessResult = '0A0B';
 
+        $guessResult = '0A0B';
 
         while (!$this->isGameSet($guessResult)) {
             $guessNumber = readline("> ");
@@ -103,7 +105,7 @@ class GuessNumberGame
                 return;
             }
 
-            $this->displayColumns();
+            $this->guessRecordBoard->displayColumns();
 
             if ($this->isGuessRecordsExists()) {
                 $this->displayGuessRecords();
@@ -177,18 +179,6 @@ class GuessNumberGame
         $guessGameChecker = new GuessNumberChecker($secretNumber, $guessNumber);
 
         return $guessGameChecker->getResult();
-    }
-
-    private function displayColumns(): void
-    {
-        $blankTimes = $this->generateBlank(6);
-
-        Brush::paintMultiWordsOnConsole(
-            [
-                new WordWithColor("Guess"),
-                new WordWithColor("$blankTimes Result"),
-            ]
-        );
     }
 
     /**
