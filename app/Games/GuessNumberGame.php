@@ -23,7 +23,7 @@ class GuessNumberGame
         $this->options = $options;
 
         $this->isDisplayForHelp = isset($options['help']) || isset($options['h']);
-        $this->length = isset($options['l']) ? (int) $options['l'] : 4;
+        $this->length = $this->resolveLength($options);
     }
 
     public function init()
@@ -207,5 +207,20 @@ class GuessNumberGame
             "Please enter a $length-digit number (digits must be all different):",
             ForegroundColors::RED
         );
+    }
+
+    /**
+     * @param array $options
+     * @return int
+     */
+    private function resolveLength(array $options): int
+    {
+        $default = 4;
+
+        if (isset($options['l'])) {
+            return (int) $options['l'];
+        }
+
+        return isset($options['length']) ? (int) $options['length'] : $default;
     }
 }
