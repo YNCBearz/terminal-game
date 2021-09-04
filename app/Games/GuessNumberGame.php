@@ -218,9 +218,9 @@ class GuessNumberGame
         $default = 4;
 
         if (isset($options['l'])) {
-            return (int) $options['l'];
+            return (int)$options['l'];
         }
 
-        return isset($options['length']) ? (int) $options['length'] : $default;
+        return isset($options['length']) ? (int)$options['length'] : $default;
     }
 }
