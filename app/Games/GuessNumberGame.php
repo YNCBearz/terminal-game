@@ -7,7 +7,7 @@ use App\Enums\Colors\ForegroundColors;
 use App\Helpers\GuessNumberChecker;
 use App\Helpers\InputChecker;
 use App\Utilities\Brush;
-use App\Utilities\NumberGenerator;
+use App\Helpers\NumberGenerator;
 
 class GuessNumberGame
 {
@@ -70,7 +70,8 @@ class GuessNumberGame
             return;
         }
 
-        $secretNumber = NumberGenerator::generate4DigitNumberWithoutRepetitions();
+        $numberGenerator = new NumberGenerator($this->length);
+        $secretNumber = $numberGenerator->generateDigitNumberWithoutRepetitions();
 
         $guessResult = '0A0B';
 
