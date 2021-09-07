@@ -5,14 +5,17 @@ namespace Tests\Feature\Games\Stats;
 use App\Games\Processes\GuessRecordBoard;
 use App\Games\Stats\LeaderBoardStorage;
 use PHPUnit\Framework\TestCase;
+use Tests\Feature\Traits\TestStorageTraits;
 
 class LeaderBoardStorageTest extends TestCase
 {
+    use TestStorageTraits;
+
     protected LeaderBoardStorage $sut;
 
     protected function tearDown(): void
     {
-        $this->deleteFilesInTestStorages();
+//        $this->deleteFilesInTestStorages();
     }
 
     /**
@@ -54,17 +57,20 @@ class LeaderBoardStorageTest extends TestCase
         $this->assertTrue(file_exists("$storagePath/leaderboard.txt"));
     }
 
-    private function deleteFilesInTestStorages()
-    {
-        $storagePath = getenv('STORAGE_PATH');
-
-        $files = glob("$storagePath/*");
-
-        foreach ($files as $file) {
-            if (is_file($file)) {
-                unlink($file);
-            }
-        }
-    }
-
+//    /**
+//     * @test
+//     */
+//    public function GivenExistFile_WhenSave_ThenUpdateFile()
+//    {
+//        $fileName = 'leaderboard.txt';
+//        $this->createFileInTestStorage($fileName);
+//
+//        $dummyGuessRecordRecord = $this->createStub(GuessRecordBoard::class);
+//        $this->sut = new LeaderBoardStorage($dummyGuessRecordRecord);
+//
+//        $this->sut->save();
+//
+//        $storagePath = getenv('STORAGE_PATH');
+//        $this->assertJsonFileEqualsJsonFile();
+//    }
 }
