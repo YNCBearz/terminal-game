@@ -109,6 +109,7 @@ class GuessNumberGame
 
                 $leaderBoardStorage = new LeaderBoardStorage($this->guessRecordBoard);
                 $leaderBoardStorage->askIfStats();
+
                 return;
             }
 

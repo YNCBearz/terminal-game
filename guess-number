@@ -4,6 +4,9 @@ use App\Games\GuessNumberGame;
 
 require __DIR__.'/vendor/autoload.php';
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 $options = getopt("h::l:", ['help::', 'length:']);
 
 $game = new GuessNumberGame($options);

@@ -9,6 +9,7 @@ use App\Utilities\Brush;
 class LeaderBoardStorage
 {
     protected GuessRecordBoard $guessRecordBoard;
+    protected string $name = 'anonymous';
 
     public function __construct(GuessRecordBoard $guessRecordBoard)
     {
@@ -17,10 +18,12 @@ class LeaderBoardStorage
 
     public function askIfStats()
     {
-        Brush::paintOnConsole("Do you want to save to leaderboard? (Y/N) \n", ForegroundColors::GREEN);
+        Brush::paintOnConsole("Do you want to save to leaderboard? (Y/N)", ForegroundColors::GREEN);
         $input = readline("> ");
+        echo PHP_EOL;
 
         if ($this->wantToSave($input)) {
+            $this->askForName();
             $this->save();
         }
 
@@ -39,10 +42,32 @@ class LeaderBoardStorage
 
     public function save()
     {
-        $storagePath = getEnv('STORAGE_PATH');
-        $file = fopen($storagePath."leaderboard.txt", "w");
-        $text = 'Hello World';
+        $storagePath = $_ENV['STORAGE_PATH'];
+        $file = fopen($storagePath."/leaderboard.txt", "a+");
+
+        $record = $this->generateSaveRecord();
+
+        $text = json_encode($record);
+
         fwrite($file, $text);
         fclose($file);
+    }
+
+    private function askForName(): void
+    {
+        Brush::paintOnConsole("Please input your name:\n", ForegroundColors::CYAN);
+        $this->name = readline("> ") ?? 'anonymous';
+        echo PHP_EOL;
+    }
+
+    /**
+     * @return array
+     */
+    private function generateSaveRecord(): array
+    {
+        $record = $this->guessRecordBoard->toArray();
+        $record = array_merge($record, ['name' => $this->name]);
+
+        return $record;
     }
 }
