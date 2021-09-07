@@ -107,4 +107,15 @@ class GuessRecordBoard
     {
         return round($this->endTime - $this->startTime, 2);
     }
+
+    public function toArray(): array
+    {
+        $length = $this->length;
+
+        return [
+            'type' => "Guess Number ($length-digit)",
+            'guess_times' => $this->getGuessTimes(),
+            'pref' => $this->getTiming()
+        ];
+    }
 }
