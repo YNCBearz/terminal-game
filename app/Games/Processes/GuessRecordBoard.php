@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Games\Process;
+namespace App\Games\Processes;
 
 use App\Elements\GuessRecord;
 use App\Elements\WordWithColor;

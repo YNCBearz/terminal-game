@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit\Games\Process;
+namespace Tests\Unit\Games\Processes;
 
 use App\Elements\GuessRecord;
-use App\Games\Process\GuessRecordBoard;
+use App\Games\Processes\GuessRecordBoard;
 use PHPUnit\Framework\TestCase;
 
 class GuessRecordBoardTest extends TestCase

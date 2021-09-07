@@ -5,7 +5,7 @@ namespace App\Games;
 use App\Elements\GuessRecord;
 use App\Elements\WordWithColor;
 use App\Enums\Colors\ForegroundColors;
-use App\Games\Process\GuessRecordBoard;
+use App\Games\Processes\GuessRecordBoard;
 use App\Helpers\GuessNumberChecker;
 use App\Helpers\InputChecker;
 use App\Utilities\Brush;
@@ -105,6 +105,7 @@ class GuessNumberGame
             if ($this->isGameSet($guessResult)) {
                 $this->guessRecordBoard->stopTiming();
                 $this->displayGameSetInfo();
+                $this->askIfStats();
 
                 return;
             }
@@ -150,7 +151,10 @@ class GuessNumberGame
         $guessTimes = $this->guessRecordBoard->getGuessTimes();
         $timing = $this->guessRecordBoard->getTiming();
 
-        Brush::paintOnConsole("You win! (perf: $timing seconds | guess times: $guessTimes)", ForegroundColors::BROWN);
+        Brush::paintOnConsole(
+            "You win! (perf: $timing seconds | guess times: $guessTimes) \n",
+            ForegroundColors::BROWN
+        );
     }
 
     /**
@@ -204,5 +208,10 @@ class GuessNumberGame
         }
 
         return true;
+    }
+
+    private function askIfStats()
+    {
+        Brush::paintOnConsole("Do you want to save to leaderboard? (Y/N)", ForegroundColors::GREEN);
     }
 }
