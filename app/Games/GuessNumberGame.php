@@ -6,6 +6,7 @@ use App\Elements\GuessRecord;
 use App\Elements\WordWithColor;
 use App\Enums\Colors\ForegroundColors;
 use App\Games\Processes\GuessRecordBoard;
+use App\Games\Stats\LeaderBoardStorage;
 use App\Helpers\GuessNumberChecker;
 use App\Helpers\InputChecker;
 use App\Utilities\Brush;
@@ -105,8 +106,9 @@ class GuessNumberGame
             if ($this->isGameSet($guessResult)) {
                 $this->guessRecordBoard->stopTiming();
                 $this->displayGameSetInfo();
-                $this->askIfStats();
 
+                $leaderBoardStorage = new LeaderBoardStorage($this->guessRecordBoard);
+                $leaderBoardStorage->askIfStats();
                 return;
             }
 
@@ -208,10 +210,5 @@ class GuessNumberGame
         }
 
         return true;
-    }
-
-    private function askIfStats()
-    {
-        Brush::paintOnConsole("Do you want to save to leaderboard? (Y/N)", ForegroundColors::GREEN);
     }
 }
