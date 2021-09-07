@@ -2,7 +2,7 @@
 
 use App\Games\GuessNumberGame;
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/vendor/autoload.php';
 
 $options = getopt("h::l:", ['help::', 'length:']);
 
