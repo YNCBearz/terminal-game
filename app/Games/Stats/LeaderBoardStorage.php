@@ -39,10 +39,9 @@ class LeaderBoardStorage
 
     public function save()
     {
-        $file = fopen( "./storages/Stats/bearFile.txt", "w");
+        $storagePath = getEnv('STORAGE_PATH');
+        $file = fopen($storagePath."leaderboard.txt", "w");
         $text = 'Hello World';
-        fwrite($file, $text);
-        $text = 'Good night!';
         fwrite($file, $text);
         fclose($file);
     }
