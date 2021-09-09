@@ -10,6 +10,7 @@ class LeaderBoardStorage
 {
     protected GuessRecordBoard $guessRecordBoard;
     protected string $name = 'anonymous';
+    protected string $fileName = 'leaderboard.txt';
 
     public function __construct(GuessRecordBoard $guessRecordBoard)
     {
@@ -43,7 +44,8 @@ class LeaderBoardStorage
     public function save()
     {
         $storagePath = $_ENV['STORAGE_PATH'];
-        $file = fopen($storagePath."/leaderboard.txt", "a+");
+        $fileName = $this->fileName;
+        $file = fopen($storagePath."/".$fileName, "a+");
 
         $record = $this->generateSaveRecord();
 
