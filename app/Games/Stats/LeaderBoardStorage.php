@@ -16,10 +16,6 @@ class LeaderBoardStorage
         $this->guessRecordBoard = $guessRecordBoard;
     }
 
-    /**
-     * This is the entry point of LeaderBoardStorage.
-     * Other public functions are for testing.
-     */
     public function askIfStats()
     {
         Brush::paintOnConsole("Do you want to save to leaderboard? (Y/N)", ForegroundColors::GREEN);
