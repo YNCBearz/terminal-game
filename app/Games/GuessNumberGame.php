@@ -154,6 +154,7 @@ class GuessNumberGame
         $guessTimes = $this->guessRecordBoard->getGuessTimes();
         $timing = $this->guessRecordBoard->getTiming();
 
+        echo PHP_EOL;
         Brush::paintOnConsole(
             "You win! (perf: $timing seconds | guess times: $guessTimes) \n",
             ForegroundColors::BROWN
