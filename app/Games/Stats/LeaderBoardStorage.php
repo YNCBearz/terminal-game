@@ -10,8 +10,7 @@ class LeaderBoardStorage
 {
     protected GuessRecordBoard $guessRecordBoard;
     protected string $name = 'anonymous';
-    protected string $fileName = 'leaderboard.json';
-    protected string $recordUUId;
+    protected string $fileName = 'leaderboard.txt';
 
     public function __construct(GuessRecordBoard $guessRecordBoard)
     {
@@ -44,18 +43,21 @@ class LeaderBoardStorage
 
     public function save()
     {
-        $filename = $this->getRecordsFileName();
-        $records = $this->getPreviousRecords($filename);
+        $storagePath = $_ENV['STORAGE_PATH'];
+        $filename = $storagePath."/".$this->fileName;
 
-        $file = fopen($filename, "w");
+        if (!file_get_contents($filename)) {
+            $records = [];
+        } else {
+            $records = json_decode(file_get_contents($filename), true);
+        }
 
-        $length = $this->guessRecordBoard->getLength();
-        $record = $this->generateRecordData();
-        $this->recordUUId = $record['uuid'];
+        $file = fopen($filename, "a+");
 
-        $records["$length-digit"][] = $record;
+        $record = $this->generateSaveRecord();
+        $records[] = $record;
 
-        $text = json_encode($records);
+        $text = json_encode([$records]);
 
         fwrite($file, $text);
         fclose($file);
@@ -71,36 +73,11 @@ class LeaderBoardStorage
     /**
      * @return array
      */
-    private function generateRecordData(): array
+    private function generateSaveRecord(): array
     {
         $record = $this->guessRecordBoard->toArray();
+        $record = array_merge($record, ['name' => $this->name]);
 
-        return array_merge($record, [
-            'name' => $this->name,
-            'uuid' => uniqid(),
-        ]);
-    }
-
-    /**
-     * @param string $filename
-     * @return array
-     */
-    private function getPreviousRecords(string $filename): array
-    {
-        if (!file_exists($filename)) {
-            return [];
-        }
-
-        return json_decode(file_get_contents($filename), true);
-    }
-
-    /**
-     * @return string
-     */
-    private function getRecordsFileName(): string
-    {
-        $storagePath = $_ENV['STORAGE_PATH'];
-
-        return $storagePath."/".$this->fileName;
+        return $record;
     }
 }

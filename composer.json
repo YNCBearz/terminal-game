@@ -6,8 +6,7 @@
     "php": "^7.4 || ^8.0",
     "ext-readline": "*",
     "vlucas/phpdotenv": "^5.3",
-    "ext-json": "*",
-    "illuminate/collections": "^8.60"
+    "ext-json": "*"
   },
   "require-dev": {
     "mockery/mockery": "^1.3.1",
