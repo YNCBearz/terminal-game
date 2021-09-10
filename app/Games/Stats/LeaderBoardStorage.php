@@ -44,12 +44,20 @@ class LeaderBoardStorage
     public function save()
     {
         $storagePath = $_ENV['STORAGE_PATH'];
-        $fileName = $this->fileName;
-        $file = fopen($storagePath."/".$fileName, "a+");
+        $filename = $storagePath."/".$this->fileName;
+
+        if (!file_get_contents($filename)) {
+            $records = [];
+        } else {
+            $records = json_decode(file_get_contents($filename), true);
+        }
+
+        $file = fopen($filename, "a+");
 
         $record = $this->generateSaveRecord();
+        $records[] = $record;
 
-        $text = json_encode($record);
+        $text = json_encode([$records]);
 
         fwrite($file, $text);
         fclose($file);
