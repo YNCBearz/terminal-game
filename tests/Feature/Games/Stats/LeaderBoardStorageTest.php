@@ -15,7 +15,7 @@ class LeaderBoardStorageTest extends TestCase
 
     protected function tearDown(): void
     {
-//        $this->deleteFilesInTestStorages();
+        $this->deleteFilesInTestStorages();
     }
 
     /**
@@ -43,19 +43,19 @@ class LeaderBoardStorageTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     */
-    public function GivenNoFile_WhenSave_ThenCreateNewFile()
-    {
-        $dummyGuessRecordRecord = $this->createStub(GuessRecordBoard::class);
-        $this->sut = new LeaderBoardStorage($dummyGuessRecordRecord);
-
-        $this->sut->save();
-
-        $storagePath = getenv('STORAGE_PATH');
-        $this->assertTrue(file_exists("$storagePath/leaderboard.txt"));
-    }
+//    /**
+//     * @test
+//     */
+//    public function GivenNoFile_WhenSave_ThenCreateNewFile()
+//    {
+//        $dummyGuessRecordRecord = $this->createStub(GuessRecordBoard::class);
+//        $this->sut = new LeaderBoardStorage($dummyGuessRecordRecord);
+//
+//        $this->sut->save();
+//
+//        $storagePath = getenv('STORAGE_PATH');
+//        $this->assertTrue(file_exists("$storagePath/leaderboard.json"));
+//    }
 
 //    /**
 //     * @test
