@@ -136,12 +136,16 @@ class LeaderBoardStorage
 
         $sorted->every(function ($record, $rank) {
             $rank = $rank + 1;
-            $name = $record['name'];
-            $pref = $record['pref'];
+            $name = substr($record['name'], 0 , 8);
+            $pref = $record['pref'] . ' seconds';
             $guessTimes = $record['guess_times'];
 
+            $blankBetweenRankAndName = TypeSetting::generateBlank(8 - strlen($rank));
+            $blankBetweenNameAndPref = TypeSetting::generateBlank(8 - strlen($name));
+            $blankBetweenPrefAndGuessTimes = TypeSetting::generateBlank(16 - strlen($pref));
+
             Brush::paintOnConsole(
-                "$rank | $name | $pref seconds | $guessTimes",
+                "$rank $blankBetweenRankAndName $name $blankBetweenNameAndPref $pref $blankBetweenPrefAndGuessTimes $guessTimes",
                 ($record['uuid'] == $this->recordUUId) ? ForegroundColors::RED : ForegroundColors::GREEN
             );
 
@@ -153,14 +157,15 @@ class LeaderBoardStorage
 
     public function displayColumns()
     {
-        $blankTimes = TypeSetting::generateBlank(6);
+        $blankTimes = TypeSetting::generateBlank(5);
+        $moreBlankTimes = TypeSetting::generateBlank(13);
 
         Brush::paintMultiWordsOnConsole(
             [
                 new WordWithColor("Rank"),
                 new WordWithColor("$blankTimes Name"),
                 new WordWithColor("$blankTimes Perf"),
-                new WordWithColor("$blankTimes Guess Times"),
+                new WordWithColor("$moreBlankTimes Guess Times"),
             ]
         );
     }
