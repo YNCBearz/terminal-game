@@ -6,6 +6,7 @@ use App\Elements\GuessRecord;
 use App\Elements\WordWithColor;
 use App\Enums\Colors\ForegroundColors;
 use App\Utilities\Brush;
+use App\Utilities\TypeSetting;
 
 class GuessRecordBoard
 {
@@ -35,7 +36,7 @@ class GuessRecordBoard
 
     public function displayColumns(): void
     {
-        $blankTimes = $this->generateBlank(6);
+        $blankTimes = TypeSetting::generateBlank(6);
 
         Brush::paintMultiWordsOnConsole(
             [
@@ -43,15 +44,6 @@ class GuessRecordBoard
                 new WordWithColor("$blankTimes Result"),
             ]
         );
-    }
-
-    /**
-     * @param int $times
-     * @return string
-     */
-    private function generateBlank(int $times): string
-    {
-        return str_repeat(' ', $times);
     }
 
     public function displayRecords(): void
@@ -69,7 +61,7 @@ class GuessRecordBoard
         $guessNumber = $record->guessNumber;
         $guessResult = $record->guessResult;
 
-        $blankTimes = $this->generateBlank(11 - $this->length);
+        $blankTimes = TypeSetting::generateBlank(11 - $this->length);
 
         Brush::paintMultiWordsOnConsole(
             [
