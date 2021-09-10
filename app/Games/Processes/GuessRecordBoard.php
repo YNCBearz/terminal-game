@@ -115,7 +115,12 @@ class GuessRecordBoard
         return [
             'type' => "Guess Number ($length-digit)",
             'guess_times' => $this->getGuessTimes(),
-            'pref' => $this->getTiming()
+            'pref' => $this->getTiming(),
         ];
+    }
+
+    public function getLength(): int
+    {
+        return $this->length;
     }
 }
