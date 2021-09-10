@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Helpers;
 
-use App\Utilities\NumberGenerator;
+use App\Helpers\NumberGenerator;
 use PHPUnit\Framework\TestCase;
 
 class NumberGeneratorTest extends TestCase

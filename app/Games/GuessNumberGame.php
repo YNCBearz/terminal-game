@@ -7,10 +7,10 @@ use App\Elements\WordWithColor;
 use App\Enums\Colors\ForegroundColors;
 use App\Games\Processes\GuessRecordBoard;
 use App\Games\Stats\LeaderBoardStorage;
-use App\Utilities\GuessNumberChecker;
-use App\Utilities\InputChecker;
+use App\Helpers\GuessNumberChecker;
+use App\Helpers\InputChecker;
 use App\Utilities\Brush;
-use App\Utilities\NumberGenerator;
+use App\Helpers\NumberGenerator;
 
 class GuessNumberGame
 {

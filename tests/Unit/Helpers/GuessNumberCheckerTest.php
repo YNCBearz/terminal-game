@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Helpers;
 
-use App\Utilities\GuessNumberChecker;
+use App\Helpers\GuessNumberChecker;
 use PHPUnit\Framework\TestCase;
 
 class GuessNumberCheckerTest extends TestCase
