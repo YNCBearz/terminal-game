@@ -2,9 +2,11 @@
 
 namespace App\Games\Stats;
 
+use App\Elements\WordWithColor;
 use App\Enums\Colors\ForegroundColors;
 use App\Games\Processes\GuessRecordBoard;
 use App\Utilities\Brush;
+use App\Utilities\TypeSetting;
 
 class LeaderBoardStorage
 {
@@ -130,29 +132,36 @@ class LeaderBoardStorage
 
         $sorted = $collection->sortBy(['perf', 'guess_times']);
 
+        $this->displayColumns();
+
         $sorted->every(function ($record, $rank) {
             $rank = $rank + 1;
             $name = $record['name'];
             $pref = $record['pref'];
             $guessTimes = $record['guess_times'];
 
-            if ($record['uuid'] == $this->recordUUId) {
-                Brush::paintOnConsole(
-                    "$rank | $name | $pref seconds | guess times: $guessTimes",
-                    ForegroundColors::RED
-                );
-
-                return true;
-            }
-
             Brush::paintOnConsole(
-                "$rank | $name | $pref seconds | guess times: $guessTimes",
-                ForegroundColors::GREEN
+                "$rank | $name | $pref seconds | $guessTimes",
+                ($record['uuid'] == $this->recordUUId) ? ForegroundColors::RED : ForegroundColors::GREEN
             );
 
             return true;
         });
 
         echo PHP_EOL;
+    }
+
+    public function displayColumns()
+    {
+        $blankTimes = TypeSetting::generateBlank(6);
+
+        Brush::paintMultiWordsOnConsole(
+            [
+                new WordWithColor("Rank"),
+                new WordWithColor("$blankTimes Name"),
+                new WordWithColor("$blankTimes Perf"),
+                new WordWithColor("$blankTimes Guess Times"),
+            ]
+        );
     }
 }
