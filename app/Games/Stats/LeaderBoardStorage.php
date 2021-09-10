@@ -27,6 +27,7 @@ class LeaderBoardStorage
         if ($this->wantToSave($input)) {
             $this->askForName();
             $this->save();
+            $this->displayRank();
         }
 
         Brush::paintOnConsole("ʕ •ᴥ•ʔ：Thank you for playing.", ForegroundColors::BROWN);
@@ -57,7 +58,7 @@ class LeaderBoardStorage
 
     private function askForName(): void
     {
-        Brush::paintOnConsole("Please input your name:\n", ForegroundColors::CYAN);
+        Brush::paintOnConsole("Please input your name:", ForegroundColors::CYAN);
         $this->name = readline("> ") ?? 'anonymous';
         echo PHP_EOL;
     }
@@ -101,6 +102,7 @@ class LeaderBoardStorage
     private function recordType(): string
     {
         $length = $this->guessRecordBoard->getLength();
+
         return "$length-digit";
     }
 
@@ -116,5 +118,41 @@ class LeaderBoardStorage
         $records[$recordType][] = $record;
 
         return $records;
+    }
+
+    private function displayRank()
+    {
+        $filename = $this->getRecordsFileName();
+        $records = $this->getPreviousRecords($filename);
+
+        $recordType = $this->recordType();
+        $collection = collect($records[$recordType]);
+
+        $sorted = $collection->sortBy(['perf', 'guess_times']);
+
+        $sorted->every(function ($record, $rank) {
+            $rank = $rank + 1;
+            $name = $record['name'];
+            $pref = $record['pref'];
+            $guessTimes = $record['guess_times'];
+
+            if ($record['uuid'] == $this->recordUUId) {
+                Brush::paintOnConsole(
+                    "$rank | $name | $pref seconds | guess times: $guessTimes",
+                    ForegroundColors::RED
+                );
+
+                return true;
+            }
+
+            Brush::paintOnConsole(
+                "$rank | $name | $pref seconds | guess times: $guessTimes",
+                ForegroundColors::GREEN
+            );
+
+            return true;
+        });
+
+        echo PHP_EOL;
     }
 }

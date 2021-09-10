@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Helpers;
 
-use App\Helpers\InputChecker;
+use App\Utilities\InputChecker;
 use PHPUnit\Framework\TestCase;
 
 class InputCheckerTest extends TestCase
