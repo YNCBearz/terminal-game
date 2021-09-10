@@ -45,15 +45,15 @@ class LeaderBoardStorage
     public function save()
     {
         $filename = $this->getRecordsFileName();
+
         $records = $this->getPreviousRecords($filename);
-
-        $file = fopen($filename, "w");
-
-        $length = $this->guessRecordBoard->getLength();
         $record = $this->generateRecordData();
         $this->recordUUId = $record['uuid'];
 
-        $records["$length-digit"][] = $record;
+        $recordType = $this->recordType();
+        $records[$recordType][] = $record;
+
+        $file = fopen($filename, "w");
 
         $text = json_encode($records);
 
@@ -102,5 +102,11 @@ class LeaderBoardStorage
         $storagePath = $_ENV['STORAGE_PATH'];
 
         return $storagePath."/".$this->fileName;
+    }
+
+    private function recordType(): string
+    {
+        $length = $this->guessRecordBoard->getLength();
+        return "$length-digit";
     }
 }
