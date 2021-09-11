@@ -30,10 +30,4 @@ class GuessNumberGameHelp
             ],
         );
     }
-
-    public function isDisplayForHelp(): bool
-    {
-        $options = $this->options;
-        return isset($options['help']) || isset($options['h']);
-    }
 }

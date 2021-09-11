@@ -2,26 +2,44 @@
 
 namespace App\Games;
 
+use App\Games\Contracts\Gameable;
+
 class GuessNumberGameEntry
 {
     protected array $options;
-    protected GuessNumberGameHelp $guessNumberGameHelp;
 
     public function __construct(array $options)
     {
         $this->options = $options;
-        $this->guessNumberGameHelp = new GuessNumberGameHelp($options);
     }
 
     public function init()
     {
-        if ($this->guessNumberGameHelp->isDisplayForHelp()) {
-            $this->guessNumberGameHelp->display();
+        if ($this->isDisplayForHelp()) {
+            $guessNumberGameHelp = new GuessNumberGameHelp($this->options);
+            $guessNumberGameHelp->display();
             return;
         }
 
-        $options = $this->options;
-        $game = new GuessNumberGame($options);
+        $game = $this->resolveGame();
         $game->start();
     }
+
+    /**
+     * @return Gameable
+     */
+    private function resolveGame(): Gameable
+    {
+        $options = $this->options;
+
+        $game = new GuessNumberGame($options);
+        return $game;
+    }
+
+    public function isDisplayForHelp(): bool
+    {
+        $options = $this->options;
+        return isset($options['help']) || isset($options['h']);
+    }
+
 }
