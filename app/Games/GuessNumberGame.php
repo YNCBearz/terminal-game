@@ -4,6 +4,7 @@ namespace App\Games;
 
 use App\Elements\GuessRecord;
 use App\Enums\Colors\ForegroundColors;
+use App\Games\Contracts\Gameable;
 use App\Games\Processes\GuessRecordBoard;
 use App\Games\Stats\LeaderBoardStorage;
 use App\Helpers\GuessNumberChecker;
@@ -11,7 +12,7 @@ use App\Helpers\InputChecker;
 use App\Utilities\Brush;
 use App\Helpers\NumberGenerator;
 
-class GuessNumberGame
+class GuessNumberGame implements Gameable
 {
     protected array $options;
 
@@ -31,13 +32,13 @@ class GuessNumberGame
         $this->guessRecordBoard = new GuessRecordBoard($this->length);
     }
 
-    public function init()
+    public function start()
     {
-        $this->pressStart();
+        $this->displayGameInfo();
         $this->hostGame();
     }
 
-    private function pressStart()
+    private function displayGameInfo()
     {
         $length = $this->length;
 

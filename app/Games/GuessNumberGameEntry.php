@@ -22,6 +22,6 @@ class GuessNumberGameEntry
 
         $options = $this->options;
         $game = new GuessNumberGame($options);
-        $game->init();
+        $game->start();
     }
 }
