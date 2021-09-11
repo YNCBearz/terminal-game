@@ -15,52 +15,34 @@ use App\Helpers\NumberGenerator;
 class GuessNumberGame
 {
     protected array $options;
-    protected bool $isDisplayForHelp;
 
     protected int $length;
     protected NumberGenerator $numberGenerator;
     protected InputChecker $inputChecker;
     protected GuessRecordBoard $guessRecordBoard;
+    protected GuessNumberGameHelp $guessNumberGameHelp;
 
     public function __construct(array $options)
     {
         $this->options = $options;
-
-        $this->isDisplayForHelp = isset($options['help']) || isset($options['h']);
         $this->length = $this->resolveLength($options);
 
         $this->numberGenerator = new NumberGenerator($this->length);
         $this->inputChecker = new InputChecker($this->length);
         $this->guessRecordBoard = new GuessRecordBoard($this->length);
+        $this->guessNumberGameHelp = new GuessNumberGameHelp($options);
     }
 
     public function init()
     {
-        if ($this->isDisplayForHelp) {
-            $this->displayForHelp();
-
+        if ($this->guessNumberGameHelp->isDisplayForHelp()) {
+            $this->guessNumberGameHelp->display();
             return;
         }
 
         $this->pressStart();
 
         $this->hostGame();
-    }
-
-    private function displayForHelp(): void
-    {
-        Brush::paintOnConsole("Description:", ForegroundColors::BROWN);
-        Brush::paintOnConsole("  Display help for a command");
-        echo PHP_EOL;
-        Brush::paintOnConsole("Options", ForegroundColors::BROWN);
-        Brush::paintMultiWordsOnConsole(
-            [
-                new WordWithColor("  -h, --help", ForegroundColors::GREEN),
-                new WordWithColor("         Display help for the given command. \n"),
-                new WordWithColor("  -l, --length", ForegroundColors::GREEN),
-                new WordWithColor("       Setting for the digit number (default: 4)."),
-            ],
-        );
     }
 
     private function pressStart()
