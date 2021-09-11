@@ -19,7 +19,7 @@ class LeaderBoardStorage
      * NOTE.
      * $nameLength must be greater than or equal to $columnBlankTimes
      */
-    protected int $nameLength = 11;
+    protected int $nameLength = 12;
     protected int $columnBlankTimes = 11;
     protected int $columnLargeBlankTimes = 16;
 
