@@ -19,28 +19,21 @@ class GuessNumberGame
     protected NumberGenerator $numberGenerator;
     protected InputChecker $inputChecker;
     protected GuessRecordBoard $guessRecordBoard;
-    protected GuessNumberGameHelp $guessNumberGameHelp;
 
     public function __construct(array $options)
     {
         $this->options = $options;
+
         $this->length = $this->resolveLength($options);
 
         $this->numberGenerator = new NumberGenerator($this->length);
         $this->inputChecker = new InputChecker($this->length);
         $this->guessRecordBoard = new GuessRecordBoard($this->length);
-        $this->guessNumberGameHelp = new GuessNumberGameHelp($options);
     }
 
     public function init()
     {
-        if ($this->guessNumberGameHelp->isDisplayForHelp()) {
-            $this->guessNumberGameHelp->display();
-            return;
-        }
-
         $this->pressStart();
-
         $this->hostGame();
     }
 

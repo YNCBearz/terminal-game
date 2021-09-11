@@ -1,6 +1,6 @@
 <?php
 
-use App\Games\GuessNumberGame;
+use App\Games\GuessNumberGameEntry;
 
 require __DIR__.'/vendor/autoload.php';
 
@@ -9,6 +9,6 @@ $dotenv->load();
 
 $options = getopt("h::l:", ['help::', 'length:']);
 
-$game = new GuessNumberGame($options);
+$game = new GuessNumberGameEntry($options);
 $game->init();
 

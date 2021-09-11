@@ -2,15 +2,15 @@
 
 namespace Tests\Unit\Games;
 
-use App\Games\GuessNumberGame;
+use App\Games\GuessNumberGameEntry;
 use PHPUnit\Framework\TestCase;
 
-class GuessGameTest extends TestCase
+class GuessGameEntryTest extends TestCase
 {
     /**
-     * @var GuessNumberGame $sut
+     * @var GuessNumberGameEntry $sut
      */
-    protected GuessNumberGame $sut;
+    protected GuessNumberGameEntry $sut;
 
     protected function setUp(): void
     {
@@ -33,7 +33,7 @@ class GuessGameTest extends TestCase
     public function GivenOptionsWithHelp_WhenInit_ThenEchoHelp(array $options)
     {
         $expected = 'Display help for a command';
-        $this->sut = new GuessNumberGame($options);
+        $this->sut = new GuessNumberGameEntry($options);
 
         $this->sut->init();
         $actual = $this->getActualOutput();
@@ -66,7 +66,7 @@ class GuessGameTest extends TestCase
     public function GivenNoOptions_WhenInit_ThenPressStart()
     {
         $expected = 'Guess Number (4-digit)';
-        $this->sut = new GuessNumberGame([]);
+        $this->sut = new GuessNumberGameEntry([]);
 
         $this->sut->init();
         $actual = $this->getActualOutput();
