@@ -15,8 +15,13 @@ class LeaderBoardStorage
     protected string $fileName = 'leaderboard.json';
     protected string $recordUUId;
 
-    protected int $columnBlankTimes = 8;
-    protected int $columnLargeBlankTimes = 13;
+    /**
+     * NOTE.
+     * $nameLength must be greater than or equal to $columnBlankTimes
+     */
+    protected int $nameLength = 11;
+    protected int $columnBlankTimes = 11;
+    protected int $columnLargeBlankTimes = 16;
 
     public function __construct(GuessRecordBoard $guessRecordBoard)
     {
@@ -63,7 +68,7 @@ class LeaderBoardStorage
 
     private function askForName(): void
     {
-        Brush::paintOnConsole("Please input your name:", ForegroundColors::CYAN);
+        Brush::paintOnConsole("Please input your name: ", ForegroundColors::CYAN);
         $this->name = readline("> ") ?? 'anonymous';
         echo PHP_EOL;
     }
@@ -139,7 +144,7 @@ class LeaderBoardStorage
 
         $sorted->every(function ($record, $rank) {
             $rank = $rank + 1;
-            $name = substr($record['name'], 0 , 9);
+            $name = substr($record['name'], 0 , $this->nameLength);
             $pref = $record['pref'] . ' seconds';
             $guessTimes = $record['guess_times'];
 
