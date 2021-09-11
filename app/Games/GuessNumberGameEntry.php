@@ -15,7 +15,7 @@ class GuessNumberGameEntry
 
     public function init()
     {
-        if ($this->isDisplayForHelp()) {
+        if ($this->isRequestForHelp()) {
             $guessNumberGameHelp = new GuessNumberGameHelp($this->options);
             $guessNumberGameHelp->display();
             return;
@@ -32,14 +32,23 @@ class GuessNumberGameEntry
     {
         $options = $this->options;
 
-        $game = new GuessNumberGame($options);
-        return $game;
+        if ($this->isRequestForReverseGame()) {
+            return new ReverseGuessNumberGame($options);
+        }
+
+        return new GuessNumberGame($options);
     }
 
-    public function isDisplayForHelp(): bool
+    public function isRequestForHelp(): bool
     {
         $options = $this->options;
         return isset($options['help']) || isset($options['h']);
+    }
+
+    private function isRequestForReverseGame(): bool
+    {
+        $options = $this->options;
+        return isset($options['reverse']) || isset($options['r']);
     }
 
 }

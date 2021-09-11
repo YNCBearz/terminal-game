@@ -63,7 +63,7 @@ class GuessGameEntryTest extends TestCase
     /**
      * @test
      */
-    public function GivenNoOptions_WhenInit_ThenPressStart()
+    public function GivenNoOptions_WhenInit_ThenStartGuessGame()
     {
         $expected = 'Guess Number (4-digit)';
         $this->sut = new GuessNumberGameEntry([]);
