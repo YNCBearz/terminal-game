@@ -3,7 +3,6 @@
 namespace App\Games;
 
 use App\Elements\GuessRecord;
-use App\Elements\WordWithColor;
 use App\Enums\Colors\ForegroundColors;
 use App\Games\Processes\GuessRecordBoard;
 use App\Games\Stats\LeaderBoardStorage;
