@@ -15,6 +15,9 @@ class LeaderBoardStorage
     protected string $fileName = 'leaderboard.json';
     protected string $recordUUId;
 
+    protected int $columnBlankTimes = 8;
+    protected int $columnLargeBlankTimes = 13;
+
     public function __construct(GuessRecordBoard $guessRecordBoard)
     {
         $this->guessRecordBoard = $guessRecordBoard;
@@ -140,9 +143,12 @@ class LeaderBoardStorage
             $pref = $record['pref'] . ' seconds';
             $guessTimes = $record['guess_times'];
 
-            $blankBetweenRankAndName = TypeSetting::generateBlank(9 - strlen($rank));
-            $blankBetweenNameAndPref = TypeSetting::generateBlank(9 - strlen($name));
-            $blankBetweenPrefAndGuessTimes = TypeSetting::generateBlank(16 - strlen($pref));
+            $recordBlankTimes = $this->columnBlankTimes + 3;
+            $recordLargeBlankTimes = $this->columnLargeBlankTimes + 3;
+
+            $blankBetweenRankAndName = TypeSetting::generateBlank($recordBlankTimes - strlen($rank));
+            $blankBetweenNameAndPref = TypeSetting::generateBlank($recordBlankTimes - strlen($name));
+            $blankBetweenPrefAndGuessTimes = TypeSetting::generateBlank($recordLargeBlankTimes - strlen($pref));
 
             Brush::paintOnConsole(
                 "$rank $blankBetweenRankAndName $name $blankBetweenNameAndPref $pref $blankBetweenPrefAndGuessTimes $guessTimes",
@@ -157,15 +163,15 @@ class LeaderBoardStorage
 
     public function displayColumns()
     {
-        $blankTimes = TypeSetting::generateBlank(6);
-        $moreBlankTimes = TypeSetting::generateBlank(13);
+        $blank = TypeSetting::generateBlank($this->columnBlankTimes);
+        $largeBlank = TypeSetting::generateBlank($this->columnLargeBlankTimes);
 
         Brush::paintMultiWordsOnConsole(
             [
                 new WordWithColor("Rank"),
-                new WordWithColor("$blankTimes Name"),
-                new WordWithColor("$blankTimes Perf"),
-                new WordWithColor("$moreBlankTimes Guess Times"),
+                new WordWithColor("$blank Name"),
+                new WordWithColor("$blank Perf"),
+                new WordWithColor("$largeBlank Guess Times"),
             ]
         );
     }
