@@ -136,12 +136,12 @@ class LeaderBoardStorage
 
         $sorted->every(function ($record, $rank) {
             $rank = $rank + 1;
-            $name = substr($record['name'], 0 , 8);
+            $name = substr($record['name'], 0 , 9);
             $pref = $record['pref'] . ' seconds';
             $guessTimes = $record['guess_times'];
 
-            $blankBetweenRankAndName = TypeSetting::generateBlank(8 - strlen($rank));
-            $blankBetweenNameAndPref = TypeSetting::generateBlank(8 - strlen($name));
+            $blankBetweenRankAndName = TypeSetting::generateBlank(9 - strlen($rank));
+            $blankBetweenNameAndPref = TypeSetting::generateBlank(9 - strlen($name));
             $blankBetweenPrefAndGuessTimes = TypeSetting::generateBlank(16 - strlen($pref));
 
             Brush::paintOnConsole(
@@ -157,7 +157,7 @@ class LeaderBoardStorage
 
     public function displayColumns()
     {
-        $blankTimes = TypeSetting::generateBlank(5);
+        $blankTimes = TypeSetting::generateBlank(6);
         $moreBlankTimes = TypeSetting::generateBlank(13);
 
         Brush::paintMultiWordsOnConsole(
