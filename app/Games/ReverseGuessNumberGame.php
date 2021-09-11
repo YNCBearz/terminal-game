@@ -37,15 +37,12 @@ class ReverseGuessNumberGame implements Gameable
     {
         //產生所有可能的數字
 
-
         //While
         //選一個可能的數字
 
         //等待User 0A0B
 
         //過濾可能的數字
-
-
 
     }
 }

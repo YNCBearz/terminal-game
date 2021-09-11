@@ -12,7 +12,7 @@ class NumberGeneratorTest extends TestCase
     /**
      * @test
      */
-    public function Should_ReturnWithoutRepetition_When_Generate4DigitNumberWithoutRepetitions()
+    public function Should_ReturnWithoutRepetition_When_GenerateDigitNumberWithoutRepetitions()
     {
         $length = 5;
         $expected = 5;
