@@ -29,7 +29,7 @@ trait GameLengthTrait
      */
     private function isValidLength(string $length): bool
     {
-        if (!is_numeric($length) || $length < 1 || $length > 10) {
+        if (!is_numeric($length) || $length < 1 || $length > 9) {
             return false;
         }
 
