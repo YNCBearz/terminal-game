@@ -231,8 +231,8 @@ class ReverseGuessNumberGame implements Gameable
      */
     private function resolveGuessNumber(): string
     {
-        $guessNumber = (string)$this->possibleNumbers[0];
+        $possibleNumbers = $this->possibleNumbers;
 
-        return $guessNumber;
+        return (string)$possibleNumbers[array_rand($possibleNumbers)];
     }
 }
