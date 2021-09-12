@@ -75,6 +75,7 @@ class GuessNumberGame implements Gameable
 
             if (!$this->inputChecker->isValidGuessNumber($guessNumber)) {
                 $this->displayErrorInputMessage();
+                echo PHP_EOL;
                 continue;
             }
 
