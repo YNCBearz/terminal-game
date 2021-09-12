@@ -10,6 +10,18 @@ class GuessRecordBoardTest extends TestCase
 {
     protected GuessRecordBoard $sut;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        ob_start();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        ob_end_clean();
+    }
+
     /**
      * @test
      */
@@ -34,5 +46,17 @@ class GuessRecordBoardTest extends TestCase
         $actual = $this->sut->isRecordsExists();
 
         $this->assertTrue($actual);
+    }
+
+    public function testDisplayColumns()
+    {
+        $expected = 'Guess';
+
+        $this->sut = new GuessRecordBoard();
+
+        $this->sut->displayColumns();
+        $actual = $this->getActualOutput();
+
+        $this->assertStringContainsString($expected, $actual);
     }
 }
