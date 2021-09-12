@@ -7,6 +7,7 @@ use App\Enums\Colors\ForegroundColors;
 use App\Games\Contracts\Gameable;
 use App\Games\Processes\GuessRecordBoard;
 use App\Games\Traits\GameLengthTrait;
+use App\Games\Traits\TestingEnvTrait;
 use App\Helpers\GuessNumberChecker;
 use App\Helpers\InputChecker;
 use App\Helpers\NumberGenerator;
@@ -15,11 +16,14 @@ use App\Utilities\Brush;
 class ReverseGuessNumberGame implements Gameable
 {
     use GameLengthTrait;
+    use TestingEnvTrait;
 
     protected array $options;
     protected int $length;
     protected NumberGenerator $numberGenerator;
     protected InputChecker $inputChecker;
+    protected GuessRecordBoard $guessRecordBoard;
+
     protected array $possibleNumbers;
 
     public function __construct(array $options)
@@ -35,12 +39,8 @@ class ReverseGuessNumberGame implements Gameable
 
     public function start()
     {
-        $length = $this->length;
-        if ($length > 4) {
-            Brush::paintOnConsole(
-                "Sorry, Reverse Guess Number above 4-digit is not supported right now.",
-                ForegroundColors::LIGHT_PURPLE
-            );
+        if ($this->isNotSupportedLength()) {
+            $this->displayNotSupportedInfo();
 
             return;
         }
@@ -62,6 +62,10 @@ class ReverseGuessNumberGame implements Gameable
 
     private function hostGame()
     {
+        if ($this->isTestingEnv()) {
+            return;
+        }
+
         $this->possibleNumbers = $this->numberGenerator->generateAllPossibleDigitNumber();
 
         $guessResult = '0A0B';
@@ -200,5 +204,23 @@ class ReverseGuessNumberGame implements Gameable
     private function isNoPossibleNumbers(): bool
     {
         return count($this->possibleNumbers) == 0;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isNotSupportedLength(): bool
+    {
+        $length = $this->length;
+
+        return $length > 4;
+    }
+
+    private function displayNotSupportedInfo(): void
+    {
+        Brush::paintOnConsole(
+            "Sorry, Reverse Guess Number above 4-digit is not supported right now.",
+            ForegroundColors::LIGHT_PURPLE
+        );
     }
 }

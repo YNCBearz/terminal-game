@@ -25,10 +25,11 @@ class GuessGameEntryTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param array $options
      *
      * @dataProvider optionsWithHelp
-     * @test
      */
     public function GivenOptionsWithHelp_WhenInit_ThenEchoHelp(array $options)
     {
@@ -72,5 +73,37 @@ class GuessGameEntryTest extends TestCase
         $actual = $this->getActualOutput();
 
         $this->assertStringContainsString($expected, $actual);
+    }
+
+    /**
+     * @test
+     *
+     * @param array $options
+     *
+     * @dataProvider optionsWithReverse
+     */
+    public function GivenOptionsWithReverse_WhenInit_ThenStartReverseGuessGame(array $options)
+    {
+        $expected = 'Reverse Guess Number (4-digit)';
+        $this->sut = new GuessNumberGameEntry($options);
+
+        $this->sut->init();
+        $actual = $this->getActualOutput();
+
+        $this->assertStringContainsString($expected, $actual);
+    }
+
+    /**
+     * @return array
+     */
+    public function optionsWithReverse(): array
+    {
+        return [
+            [
+                [
+                    'r' => false,
+                ],
+            ],
+        ];
     }
 }

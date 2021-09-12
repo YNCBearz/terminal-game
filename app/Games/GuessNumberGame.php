@@ -8,6 +8,7 @@ use App\Games\Contracts\Gameable;
 use App\Games\Processes\GuessRecordBoard;
 use App\Games\Stats\LeaderBoardStorage;
 use App\Games\Traits\GameLengthTrait;
+use App\Games\Traits\TestingEnvTrait;
 use App\Helpers\GuessNumberChecker;
 use App\Helpers\InputChecker;
 use App\Utilities\Brush;
@@ -16,6 +17,7 @@ use App\Helpers\NumberGenerator;
 class GuessNumberGame implements Gameable
 {
     use GameLengthTrait;
+    use TestingEnvTrait;
 
     protected array $options;
 
@@ -103,18 +105,6 @@ class GuessNumberGame implements Gameable
             $this->guessRecordBoard->displayRecord($record);
             $this->guessRecordBoard->writeDownRecord($record);
         }
-    }
-
-    /**
-     * @return bool
-     */
-    private function isTestingEnv(): bool
-    {
-        if (!isset($_ENV['APP_ENV'])) {
-            $_ENV['APP_ENV'] = getenv('APP_ENV');
-        }
-
-        return $_ENV['APP_ENV'] == 'testing';
     }
 
     /**
