@@ -89,6 +89,8 @@ class InputCheckerTest extends TestCase
             ['aabb'],
             ['123'],
             ['...'],
+            ['1234'],
+            ['1atb'],
         ];
     }
 

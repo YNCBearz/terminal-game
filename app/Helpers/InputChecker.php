@@ -37,10 +37,14 @@ class InputChecker
             return false;
         }
 
+        if ($strSplit[1] != 'A' || $strSplit[3] != 'B') {
+            return false;
+        }
+
         $bullCounts = $strSplit[0];
         $cowCounts = $strSplit[2];
 
-        if (!is_numeric($bullCounts) && !is_numeric($cowCounts)) {
+        if (!is_numeric($bullCounts) || !is_numeric($cowCounts)) {
             return false;
         }
 
