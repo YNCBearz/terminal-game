@@ -5,6 +5,7 @@ namespace App\Games;
 use App\Enums\Colors\ForegroundColors;
 use App\Games\Contracts\Gameable;
 use App\Games\Traits\GameLengthTrait;
+use App\Helpers\NumberGenerator;
 use App\Utilities\Brush;
 
 class ReverseGuessNumberGame implements Gameable
@@ -13,12 +14,15 @@ class ReverseGuessNumberGame implements Gameable
 
     protected array $options;
     protected int $length;
+    protected NumberGenerator $numberGenerator;
 
     public function __construct(array $options)
     {
         $this->options = $options;
 
         $this->length = $this->resolveLength($options);
+
+        $this->numberGenerator = new NumberGenerator($this->length);
     }
 
     public function start()
@@ -41,6 +45,7 @@ class ReverseGuessNumberGame implements Gameable
     private function hostGame()
     {
         //產生所有可能的數字
+        $possibleNumbers = $this->numberGenerator->generateAllPossibleDigitNumber();
 
         //While
         //選一個可能的數字
