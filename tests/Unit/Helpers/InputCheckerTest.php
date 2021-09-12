@@ -54,6 +54,8 @@ class InputCheckerTest extends TestCase
     /**
      * @test
      *
+     * @param string $guessResult
+     *
      * @dataProvider notFormatGuessResult
      */
     public function GivenNotFormatGuessResult_WhenIsValidGuessResult_ReturnFalse($guessResult)
@@ -67,11 +69,14 @@ class InputCheckerTest extends TestCase
 
     /**
      * @test
+     *
+     * @param string $guessResult
+     *
+     * @dataProvider formatGuessResult
      */
-    public function GivenFormatGuessResult_WhenIsValidGuessResult_ReturnTrue()
+    public function GivenFormatGuessResult_WhenIsValidGuessResult_ReturnTrue(string $guessResult)
     {
         $this->sut = new InputChecker(5);
-        $guessResult = '0a1b';
 
         $actual = $this->sut->isValidGuessResult($guessResult);
 
@@ -84,6 +89,14 @@ class InputCheckerTest extends TestCase
             ['aabb'],
             ['123'],
             ['...'],
+        ];
+    }
+
+    public function formatGuessResult(): array
+    {
+        return [
+            ['0A1b'],
+            ['1a1b'],
         ];
     }
 
