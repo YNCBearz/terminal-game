@@ -25,6 +25,7 @@ class ReverseGuessNumberGame implements Gameable
     protected GuessRecordBoard $guessRecordBoard;
 
     protected array $possibleNumbers;
+    protected int $maxSupportedLength = 6;
 
     public function __construct(array $options)
     {
@@ -142,7 +143,7 @@ class ReverseGuessNumberGame implements Gameable
         echo PHP_EOL;
 
         $probability = round(1 / count($this->possibleNumbers), 2) * 100;
-        $displayOfProbability = ($probability > 0) ? "($probability%)": '';
+        $displayOfProbability = ($probability > 0) ? "($probability%)" : '';
 
         Brush::paintOnConsole(
             "ʕ •ᴥ•ʔ： $guessNumber? $displayOfProbability",
@@ -214,9 +215,7 @@ class ReverseGuessNumberGame implements Gameable
      */
     private function isNotSupportedLength(): bool
     {
-        $length = $this->length;
-
-        return $length > 4;
+        return $this->length > $this->maxSupportedLength;
     }
 
     private function displayNotSupportedInfo(): void
