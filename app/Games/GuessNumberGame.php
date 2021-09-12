@@ -65,8 +65,9 @@ class GuessNumberGame implements Gameable
 
         while (!$this->isGameSet($guessResult)) {
             $guessNumber = readline("> ");
+            $guessNumber = strtoupper($guessNumber);
 
-            if ($guessNumber == 'exit') {
+            if ($guessNumber == 'EXIT') {
                 return;
             }
 
