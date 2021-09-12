@@ -43,6 +43,21 @@ class LeaderBoardStorageTest extends TestCase
         ];
     }
 
+    /**
+     * @test
+     */
+    public function GivenNoInput_WhenWantToSave_ThenReturnFalse()
+    {
+        $input = 'N';
+
+        $dummyGuessRecordRecord = $this->createStub(GuessRecordBoard::class);
+        $this->sut = new LeaderBoardStorage($dummyGuessRecordRecord);
+
+        $actual = $this->sut->wantToSave($input);
+
+        $this->assertFalse($actual);
+    }
+
 //    /**
 //     * @test
 //     */
