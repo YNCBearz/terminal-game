@@ -220,8 +220,10 @@ class ReverseGuessNumberGame implements Gameable
 
     private function displayNotSupportedInfo(): void
     {
+        $maxSupportedLength = $this->maxSupportedLength;
+
         Brush::paintOnConsole(
-            "Sorry, Reverse Guess Number above 4-digit is not supported right now.",
+            "Sorry, Reverse Guess Number above $maxSupportedLength-digit is not supported right now.",
             ForegroundColors::LIGHT_PURPLE
         );
     }
