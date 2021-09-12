@@ -113,6 +113,7 @@ class ReverseGuessNumberGame implements Gameable
 
             if ($this->isNoPossibleNumbers()) {
                 $this->displayGameOverInfo();
+
                 return;
             }
         }
