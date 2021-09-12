@@ -104,6 +104,52 @@ class GuessGameEntryTest extends TestCase
                     'r' => false,
                 ],
             ],
+            [
+                [
+                    'reverse' => false,
+                ],
+            ],
         ];
     }
+
+    /**
+     * @test
+     *
+     * @param array $options
+     * @param int $length
+     *
+     * @dataProvider optionsWithLength
+     */
+    public function GivenOptionsWithLength_WhenInit_ThenStartGameWithLength(array $options, int $length)
+    {
+        $expected = "$length-digit";
+        $this->sut = new GuessNumberGameEntry($options);
+
+        $this->sut->init();
+        $actual = $this->getActualOutput();
+
+        $this->assertStringContainsString($expected, $actual);
+    }
+
+    /**
+     * @return array
+     */
+    public function optionsWithLength(): array
+    {
+        return [
+            [
+                [
+                    'l' => 4,
+                ],
+                4,
+            ],
+            [
+                [
+                    'length' => 6,
+                ],
+                6,
+            ],
+        ];
+    }
+
 }
