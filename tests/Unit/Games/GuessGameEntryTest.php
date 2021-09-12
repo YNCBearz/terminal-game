@@ -152,4 +152,21 @@ class GuessGameEntryTest extends TestCase
         ];
     }
 
+    /**
+     * @test
+     */
+    public function GivenOptionsWithInvalidLength_WhenInit_ThenStartGameWithDefaultLength()
+    {
+        $expected = "4-digit";
+        $options = [
+            'l' => 10,
+        ];
+        $this->sut = new GuessNumberGameEntry($options);
+
+        $this->sut->init();
+        $actual = $this->getActualOutput();
+
+        $this->assertStringContainsString($expected, $actual);
+    }
+
 }
