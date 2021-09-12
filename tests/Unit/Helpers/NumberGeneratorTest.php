@@ -52,6 +52,8 @@ class NumberGeneratorTest extends TestCase
         return [
             [1, 10],
             [2, 10 * 9],
+            [3, 10 * 9 * 8],
+            [4, 10 * 9 * 8 * 7],
         ];
     }
 }
