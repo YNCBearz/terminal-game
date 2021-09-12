@@ -71,7 +71,7 @@ class GuessNumberGame implements Gameable
                 return;
             }
 
-            if (!$this->inputChecker->isValid($guessNumber)) {
+            if (!$this->inputChecker->isValidGuessNumber($guessNumber)) {
                 $this->displayErrorInputMessage();
                 continue;
             }

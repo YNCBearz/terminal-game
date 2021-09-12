@@ -15,7 +15,7 @@ class InputChecker
      * @param string $guessNumber
      * @return bool
      */
-    public function isValid(string $guessNumber): bool
+    public function isValidGuessNumber(string $guessNumber): bool
     {
         $length = $this->length;
 

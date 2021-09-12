@@ -18,7 +18,7 @@ class InputCheckerTest extends TestCase
         $guessNumber = '123';
         $expected = false;
 
-        $actual = $this->sut->isValid($guessNumber);
+        $actual = $this->sut->isValidGuessNumber($guessNumber);
 
         $this->assertEquals($expected, $actual);
     }
@@ -32,7 +32,7 @@ class InputCheckerTest extends TestCase
         $guessNumber = 'bear';
         $expected = false;
 
-        $actual = $this->sut->isValid($guessNumber);
+        $actual = $this->sut->isValidGuessNumber($guessNumber);
 
         $this->assertEquals($expected, $actual);
     }
@@ -46,7 +46,7 @@ class InputCheckerTest extends TestCase
         $guessNumber = '11123';
         $expected = false;
 
-        $actual = $this->sut->isValid($guessNumber);
+        $actual = $this->sut->isValidGuessNumber($guessNumber);
 
         $this->assertEquals($expected, $actual);
     }
