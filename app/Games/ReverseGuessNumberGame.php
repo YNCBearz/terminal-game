@@ -4,16 +4,21 @@ namespace App\Games;
 
 use App\Enums\Colors\ForegroundColors;
 use App\Games\Contracts\Gameable;
+use App\Games\Traits\GameLengthTrait;
 use App\Utilities\Brush;
 
 class ReverseGuessNumberGame implements Gameable
 {
+    use GameLengthTrait;
+
     protected array $options;
-    protected int $length = 4;
+    protected int $length;
 
     public function __construct(array $options)
     {
         $this->options = $options;
+
+        $this->length = $this->resolveLength($options);
     }
 
     public function start()

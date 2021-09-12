@@ -7,6 +7,7 @@ use App\Enums\Colors\ForegroundColors;
 use App\Games\Contracts\Gameable;
 use App\Games\Processes\GuessRecordBoard;
 use App\Games\Stats\LeaderBoardStorage;
+use App\Games\Traits\GameLengthTrait;
 use App\Helpers\GuessNumberChecker;
 use App\Helpers\InputChecker;
 use App\Utilities\Brush;
@@ -14,6 +15,8 @@ use App\Helpers\NumberGenerator;
 
 class GuessNumberGame implements Gameable
 {
+    use GameLengthTrait;
+
     protected array $options;
 
     protected int $length;
@@ -155,37 +158,5 @@ class GuessNumberGame implements Gameable
             "Please enter a $length-digit number (digits must be all different):",
             ForegroundColors::RED
         );
-    }
-
-    /**
-     * @param array $options
-     * @return int
-     */
-    private function resolveLength(array $options): int
-    {
-        $default = 4;
-
-        if (isset($options['l']) && $this->isValidLength($options['l'])) {
-            return (int)$options['l'];
-        }
-
-        if (isset($options['length']) && $this->isValidLength($options['length'])) {
-            return (int)$options['length'];
-        }
-
-        return $default;
-    }
-
-    /**
-     * @param string $length
-     * @return bool
-     */
-    private function isValidLength(string $length): bool
-    {
-        if (!is_numeric($length) || $length < 1 || $length > 10) {
-            return false;
-        }
-
-        return true;
     }
 }
