@@ -27,15 +27,31 @@ class NumberGeneratorTest extends TestCase
         $this->assertEquals(count($uniqueNumbers), $expected, "$length-digit number (repetition): $number");
     }
 
-    public function Should_ReturnCorrectNumberWithoutRepetition_When_GenerateAllPossibleDigitNumber()
-    {
-        $length = 1;
-        $expected = 10;
 
+    /**
+     * @test
+     *
+     * @param int $length
+     * @param int $expectedCount
+     *
+     * @dataProvider eachLengthCountOfNumber
+     */
+    public function Should_ReturnCorrectCountOfNumberWithoutRepetition_When_GenerateAllPossibleDigitNumber(
+        int $length,
+        int $expectedCount
+    ) {
         $this->sut = new NumberGenerator($length);
 
         $possibleNumbers = $this->sut->generateAllPossibleDigitNumber();
 
-        $this->assertEquals(count($possibleNumbers), $expected);
+        $this->assertEquals(count($possibleNumbers), $expectedCount);
+    }
+
+    public function eachLengthCountOfNumber(): array
+    {
+        return [
+            [1, 10],
+            [2, 10 * 9],
+        ];
     }
 }
