@@ -71,7 +71,7 @@ class ReverseGuessNumberGame implements Gameable
         $guessResult = '0A0B';
 
         while (!$this->isGameSet($guessResult)) {
-            $guessNumber = (string)$this->possibleNumbers[0];
+            $guessNumber = $this->resolveGuessNumber();
 
             $this->displayGuessNumber($guessNumber);
             $this->askForGuessResult();
@@ -141,8 +141,11 @@ class ReverseGuessNumberGame implements Gameable
     {
         echo PHP_EOL;
 
+        $probability = round(1 / count($this->possibleNumbers), 2) * 100;
+        $displayOfProbability = ($probability > 0) ? "($probability%)": '';
+
         Brush::paintOnConsole(
-            "ʕ •ᴥ•ʔ： $guessNumber?",
+            "ʕ •ᴥ•ʔ： $guessNumber? $displayOfProbability",
             ForegroundColors::BROWN
         );
 
@@ -159,7 +162,7 @@ class ReverseGuessNumberGame implements Gameable
 
     private function askForGuessResult()
     {
-        Brush::paintOnConsole("Please enter a guess result: (such as 0A1B)", ForegroundColors::GREEN);
+        Brush::paintOnConsole("Please enter a guess result: ", ForegroundColors::GREEN);
     }
 
     private function displayGameSetInfo()
@@ -222,5 +225,15 @@ class ReverseGuessNumberGame implements Gameable
             "Sorry, Reverse Guess Number above 4-digit is not supported right now.",
             ForegroundColors::LIGHT_PURPLE
         );
+    }
+
+    /**
+     * @return string
+     */
+    private function resolveGuessNumber(): string
+    {
+        $guessNumber = (string)$this->possibleNumbers[0];
+
+        return $guessNumber;
     }
 }
