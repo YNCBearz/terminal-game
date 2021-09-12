@@ -23,4 +23,13 @@ class InputChecker
             is_numeric($guessNumber) &&
             count(array_unique(str_split($guessNumber))) == $length;
     }
+
+    /**
+     * @param string $guessResult
+     * @return bool
+     */
+    public function isValidGuessResult(string $guessResult): bool
+    {
+        return false;
+    }
 }

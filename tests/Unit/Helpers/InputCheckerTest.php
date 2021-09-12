@@ -51,5 +51,18 @@ class InputCheckerTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
+    /**
+     * @test
+     */
+    public function GivenNotFormatGuessResult_WhenIsValidGuessResult_ReturnFalse()
+    {
+        $this->sut = new InputChecker(5);
+        $guessResult = 'aabb';
+
+        $actual = $this->sut->isValidGuessResult($guessResult);
+
+        $this->assertFalse($actual);
+    }
+
 
 }
