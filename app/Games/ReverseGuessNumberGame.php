@@ -17,6 +17,7 @@ class ReverseGuessNumberGame implements Gameable
     protected int $length;
     protected NumberGenerator $numberGenerator;
     protected array $possibleNumbers;
+    protected int $guessTimes = 1;
 
     public function __construct(array $options)
     {
@@ -32,7 +33,11 @@ class ReverseGuessNumberGame implements Gameable
     {
         $length = $this->length;
         if ($length > 4) {
-            Brush::paintOnConsole("Sorry, Reverse Guess Number above 4-digit is not supported right now.", ForegroundColors::LIGHT_PURPLE);
+            Brush::paintOnConsole(
+                "Sorry, Reverse Guess Number above 4-digit is not supported right now.",
+                ForegroundColors::LIGHT_PURPLE
+            );
+
             return;
         }
 
@@ -58,13 +63,15 @@ class ReverseGuessNumberGame implements Gameable
         $guessResult = '0A0B';
 
         while (!$this->isGameSet($guessResult)) {
-            $guessNumber =$this->possibleNumbers[0];
+            $guessNumber = (string)$this->possibleNumbers[0];
 
             $this->displayGuessNumber($guessNumber);
+            $this->askForGuessResult();
 
             $guessResult = readline("> ");
+            $guessResult = strtoupper($guessResult);
 
-            if ($guessResult == 'exit') {
+            if ($guessResult == 'EXIT') {
                 return;
             }
 
@@ -72,14 +79,17 @@ class ReverseGuessNumberGame implements Gameable
                 $this->displayErrorInputMessage();
                 continue;
             }
+
+            if ($this->isGameSet($guessResult)) {
+                echo PHP_EOL;
+                $this->displayGameSetInfo();
+
+                return;
+            }
+
+            $this->guessTimes++;
+            $this->filterPossibleNumbersWithGameResult($guessNumber, $guessResult);
         }
-        //While
-        //選一個可能的數字
-
-        //等待User 0A0B
-
-        //過濾可能的數字
-
     }
 
     /**
@@ -106,6 +116,31 @@ class ReverseGuessNumberGame implements Gameable
 
     private function displayErrorInputMessage()
     {
+        $length = $this->length;
+        Brush::paintOnConsole(
+            "There are something wrong with the guess result you input, please try again.",
+            ForegroundColors::RED
+        );
+    }
 
+    private function askForGuessResult()
+    {
+        Brush::paintOnConsole("Please enter a guess result: (such as 0A1B)", ForegroundColors::GREEN);
+    }
+
+    private function displayGameSetInfo()
+    {
+        $guessTimes = $this->guessTimes;
+
+        Brush::paintOnConsole("ʕ •ᴥ•ʔ：Thank you for playing. (guess times: $guessTimes)", ForegroundColors::BROWN);
+    }
+
+    /**
+     * @param string $guessNumber
+     * @param string $guessResult
+     */
+    private function filterPossibleNumbersWithGameResult(string $guessNumber, string $guessResult)
+    {
+        $possibleNumbers = $this->possibleNumbers;
     }
 }
