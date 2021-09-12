@@ -5,6 +5,7 @@ namespace App\Games;
 use App\Enums\Colors\ForegroundColors;
 use App\Games\Contracts\Gameable;
 use App\Games\Traits\GameLengthTrait;
+use App\Helpers\InputChecker;
 use App\Helpers\NumberGenerator;
 use App\Utilities\Brush;
 
@@ -15,6 +16,7 @@ class ReverseGuessNumberGame implements Gameable
     protected array $options;
     protected int $length;
     protected NumberGenerator $numberGenerator;
+    protected array $possibleNumbers;
 
     public function __construct(array $options)
     {
@@ -23,6 +25,7 @@ class ReverseGuessNumberGame implements Gameable
         $this->length = $this->resolveLength($options);
 
         $this->numberGenerator = new NumberGenerator($this->length);
+        $this->inputChecker = new InputChecker($this->length);
     }
 
     public function start()
@@ -50,15 +53,59 @@ class ReverseGuessNumberGame implements Gameable
 
     private function hostGame()
     {
-        //產生所有可能的數字
-        $possibleNumbers = $this->numberGenerator->generateAllPossibleDigitNumber();
+        $this->possibleNumbers = $this->numberGenerator->generateAllPossibleDigitNumber();
 
+        $guessResult = '0A0B';
+
+        while (!$this->isGameSet($guessResult)) {
+            $guessNumber =$this->possibleNumbers[0];
+
+            $this->displayGuessNumber($guessNumber);
+
+            $guessResult = readline("> ");
+
+            if ($guessResult == 'exit') {
+                return;
+            }
+
+            if (!$this->inputChecker->isValidGuessResult($guessResult)) {
+                $this->displayErrorInputMessage();
+                continue;
+            }
+        }
         //While
         //選一個可能的數字
 
         //等待User 0A0B
 
         //過濾可能的數字
+
+    }
+
+    /**
+     * @param string $guessResult
+     * @return bool
+     */
+    private function isGameSet(string $guessResult): bool
+    {
+        $length = $this->length;
+
+        return $guessResult == $length.'A0B';
+    }
+
+    /**
+     * @param string $guessNumber
+     */
+    private function displayGuessNumber(string $guessNumber)
+    {
+        Brush::paintOnConsole(
+            "ʕ •ᴥ•ʔ： $guessNumber?",
+            ForegroundColors::BROWN
+        );
+    }
+
+    private function displayErrorInputMessage()
+    {
 
     }
 }
