@@ -5,6 +5,7 @@ namespace App\Games;
 use App\Enums\Colors\ForegroundColors;
 use App\Games\Contracts\Gameable;
 use App\Games\Traits\GameLengthTrait;
+use App\Helpers\GuessNumberChecker;
 use App\Helpers\InputChecker;
 use App\Helpers\NumberGenerator;
 use App\Utilities\Brush;
@@ -16,6 +17,7 @@ class ReverseGuessNumberGame implements Gameable
     protected array $options;
     protected int $length;
     protected NumberGenerator $numberGenerator;
+    protected InputChecker $inputChecker;
     protected array $possibleNumbers;
     protected int $guessTimes = 1;
 
@@ -70,6 +72,7 @@ class ReverseGuessNumberGame implements Gameable
 
             $guessResult = readline("> ");
             $guessResult = strtoupper($guessResult);
+            echo PHP_EOL;
 
             if ($guessResult == 'EXIT') {
                 return;
@@ -81,7 +84,6 @@ class ReverseGuessNumberGame implements Gameable
             }
 
             if ($this->isGameSet($guessResult)) {
-                echo PHP_EOL;
                 $this->displayGameSetInfo();
 
                 return;
@@ -112,11 +114,12 @@ class ReverseGuessNumberGame implements Gameable
             "ʕ •ᴥ•ʔ： $guessNumber?",
             ForegroundColors::BROWN
         );
+
+        echo PHP_EOL;
     }
 
     private function displayErrorInputMessage()
     {
-        $length = $this->length;
         Brush::paintOnConsole(
             "There are something wrong with the guess result you input, please try again.",
             ForegroundColors::RED
@@ -142,5 +145,17 @@ class ReverseGuessNumberGame implements Gameable
     private function filterPossibleNumbersWithGameResult(string $guessNumber, string $guessResult)
     {
         $possibleNumbers = $this->possibleNumbers;
+
+        $result = [];
+        foreach ($possibleNumbers as $compareNumber) {
+            $guessNumberChecker = new GuessNumberChecker($compareNumber, $guessNumber);
+            $compareResult = $guessNumberChecker->getResult();
+
+            if ($compareResult == $guessResult) {
+                $result[] = $compareNumber;
+            }
+        }
+
+        $this->possibleNumbers = $result;
     }
 }

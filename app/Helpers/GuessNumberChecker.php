@@ -7,18 +7,18 @@ use App\Utilities\NumberConverter;
 class GuessNumberChecker
 {
     /**
-     * @var string $secretNumber
+     * @var string $compareNumber
      */
-    protected string $secretNumber;
+    protected string $compareNumber;
 
     /**
      * @var string $guessNumber
      */
     protected string $guessNumber;
 
-    public function __construct(string $secretNumber, string $guessNumber)
+    public function __construct(string $compareNumber, string $guessNumber)
     {
-        $this->secretNumber = $secretNumber;
+        $this->compareNumber = $compareNumber;
         $this->guessNumber = $guessNumber;
     }
 
@@ -27,7 +27,7 @@ class GuessNumberChecker
      */
     private function bullCounts(): int
     {
-        $secretNumber = $this->secretNumber;
+        $secretNumber = $this->compareNumber;
         $guessNumber = $this->guessNumber;
 
         $secretDigits = NumberConverter::toDigits($secretNumber);
@@ -48,7 +48,7 @@ class GuessNumberChecker
      */
     private function cowCounts(): int
     {
-        $secretNumber = $this->secretNumber;
+        $secretNumber = $this->compareNumber;
         $guessNumber = $this->guessNumber;
 
         $secretDigits = NumberConverter::toDigits($secretNumber);
