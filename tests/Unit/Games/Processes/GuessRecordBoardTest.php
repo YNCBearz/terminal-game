@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Games\Processes;
+namespace Tests\Feature\Games\Processes;
 
 use App\Elements\GuessRecord;
 use App\Games\Processes\GuessRecordBoard;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Games;
+namespace Tests\Feature\Games;
 
 use App\Games\GuessNumberGameEntry;
 use PHPUnit\Framework\TestCase;
