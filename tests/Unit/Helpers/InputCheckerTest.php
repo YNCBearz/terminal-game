@@ -65,7 +65,7 @@ class InputCheckerTest extends TestCase
 
         $actual = $this->sut->isValidGuessResult($guessResult);
 
-        $this->assertFalse($actual);
+        $this->assertFalse($actual, "Not valid guess result: $guessResult ($length-digit)");
     }
 
     /**
@@ -82,7 +82,7 @@ class InputCheckerTest extends TestCase
 
         $actual = $this->sut->isValidGuessResult($guessResult);
 
-        $this->assertTrue($actual);
+        $this->assertTrue($actual, "Valid guess result: $guessResult ($length-digit)");
     }
 
     public function notFormatGuessResult(): array
@@ -93,6 +93,7 @@ class InputCheckerTest extends TestCase
             [4, '...'],
             [4, '1234'],
             [4, '1atb'],
+            [4, '0a5b'],
         ];
     }
 

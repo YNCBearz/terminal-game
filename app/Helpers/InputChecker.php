@@ -30,6 +30,8 @@ class InputChecker
      */
     public function isValidGuessResult(string $guessResult): bool
     {
+        $length = $this->length;
+
         $guessResult = strtoupper($guessResult);
         $strSplit = str_split($guessResult);
 
@@ -45,6 +47,10 @@ class InputChecker
         $cowCounts = $strSplit[2];
 
         if (!is_numeric($bullCounts) || !is_numeric($cowCounts)) {
+            return false;
+        }
+
+        if ($bullCounts + $cowCounts > $length) {
             return false;
         }
 
