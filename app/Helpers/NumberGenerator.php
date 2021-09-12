@@ -25,4 +25,22 @@ class NumberGenerator
 
         return $result;
     }
+
+    public function generateAllPossibleDigitNumber(): array
+    {
+        $length = $this->length;
+
+        $rangeOfNumbers = range(0, pow(10, $length) - 1);
+
+        $result = [];
+
+        foreach ($rangeOfNumbers as $number) {
+            $number = (string) $number;
+            if (count(array_unique(str_split($number))) == $length) {
+                $result[] = $number;
+            }
+        }
+
+        return $result;
+    }
 }

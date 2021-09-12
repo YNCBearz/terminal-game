@@ -26,4 +26,16 @@ class NumberGeneratorTest extends TestCase
         $uniqueNumbers = array_unique($digits);
         $this->assertEquals(count($uniqueNumbers), $expected, "$length-digit number (repetition): $number");
     }
+
+    public function Should_ReturnCorrectNumberWithoutRepetition_When_GenerateAllPossibleDigitNumber()
+    {
+        $length = 1;
+        $expected = 10;
+
+        $this->sut = new NumberGenerator($length);
+
+        $possibleNumbers = $this->sut->generateAllPossibleDigitNumber();
+
+        $this->assertEquals(count($possibleNumbers), $expected);
+    }
 }
