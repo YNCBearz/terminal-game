@@ -2,8 +2,10 @@
 
 namespace App\Games;
 
+use App\Elements\GuessRecord;
 use App\Enums\Colors\ForegroundColors;
 use App\Games\Contracts\Gameable;
+use App\Games\Processes\GuessRecordBoard;
 use App\Games\Traits\GameLengthTrait;
 use App\Helpers\GuessNumberChecker;
 use App\Helpers\InputChecker;
@@ -19,7 +21,6 @@ class ReverseGuessNumberGame implements Gameable
     protected NumberGenerator $numberGenerator;
     protected InputChecker $inputChecker;
     protected array $possibleNumbers;
-    protected int $guessTimes = 1;
 
     public function __construct(array $options)
     {
@@ -29,6 +30,7 @@ class ReverseGuessNumberGame implements Gameable
 
         $this->numberGenerator = new NumberGenerator($this->length);
         $this->inputChecker = new InputChecker($this->length);
+        $this->guessRecordBoard = new GuessRecordBoard($this->length);
     }
 
     public function start()
@@ -83,14 +85,36 @@ class ReverseGuessNumberGame implements Gameable
                 continue;
             }
 
+            if (!$this->guessRecordBoard->isRecordsExists()) {
+                $this->guessRecordBoard->beginTiming();
+            }
+
             if ($this->isGameSet($guessResult)) {
+                $this->guessRecordBoard->stopTiming();
                 $this->displayGameSetInfo();
 
                 return;
             }
 
-            $this->guessTimes++;
             $this->filterPossibleNumbersWithGameResult($guessNumber, $guessResult);
+
+            $this->guessRecordBoard->displayColumns();
+
+            if ($this->guessRecordBoard->isRecordsExists()) {
+                $this->guessRecordBoard->displayRecords();
+            }
+
+            $record = new GuessRecord($guessNumber, $guessResult);
+
+            $this->guessRecordBoard->displayRecord($record);
+            $this->guessRecordBoard->writeDownRecord($record);
+
+            echo PHP_EOL;
+
+            if ($this->isNoPossibleNumbers()) {
+                $this->displayGameOverInfo();
+                return;
+            }
         }
     }
 
@@ -110,6 +134,8 @@ class ReverseGuessNumberGame implements Gameable
      */
     private function displayGuessNumber(string $guessNumber)
     {
+        echo PHP_EOL;
+
         Brush::paintOnConsole(
             "ʕ •ᴥ•ʔ： $guessNumber?",
             ForegroundColors::BROWN
@@ -121,7 +147,7 @@ class ReverseGuessNumberGame implements Gameable
     private function displayErrorInputMessage()
     {
         Brush::paintOnConsole(
-            "There are something wrong with the guess result you input, please try again.",
+            "Please check your input: (format must like 0A1B)",
             ForegroundColors::RED
         );
     }
@@ -133,7 +159,7 @@ class ReverseGuessNumberGame implements Gameable
 
     private function displayGameSetInfo()
     {
-        $guessTimes = $this->guessTimes;
+        $guessTimes = $this->guessRecordBoard->getGuessTimes();
 
         Brush::paintOnConsole("ʕ •ᴥ•ʔ：Thank you for playing. (guess times: $guessTimes)", ForegroundColors::BROWN);
     }
@@ -157,5 +183,21 @@ class ReverseGuessNumberGame implements Gameable
         }
 
         $this->possibleNumbers = $result;
+    }
+
+    private function displayGameOverInfo(): void
+    {
+        Brush::paintOnConsole(
+            "There are something wrong with the guess results you input before.",
+            ForegroundColors::RED
+        );
+    }
+
+    /**
+     * @return bool
+     */
+    private function isNoPossibleNumbers(): bool
+    {
+        return count($this->possibleNumbers) == 0;
     }
 }
