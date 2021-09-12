@@ -169,4 +169,24 @@ class GuessGameEntryTest extends TestCase
         $this->assertStringContainsString($expected, $actual);
     }
 
+    /**
+     * @test
+     */
+    public function GivenOptionsWithNotSupportedLengthReverseGuessGame_WhenInit_ThenDisplayNotSupportedInfo()
+    {
+        $expected = 'Reverse Guess Number above 4-digit is not supported';
+
+        $options = [
+            'r' => false,
+            'l' => 8,
+        ];
+
+        $this->sut = new GuessNumberGameEntry($options);
+
+        $this->sut->init();
+        $actual = $this->getActualOutput();
+
+        $this->assertStringContainsString($expected, $actual);
+    }
+
 }
