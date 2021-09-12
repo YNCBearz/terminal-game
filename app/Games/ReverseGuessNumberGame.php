@@ -27,6 +27,12 @@ class ReverseGuessNumberGame implements Gameable
 
     public function start()
     {
+        $length = $this->length;
+        if ($length > 4) {
+            Brush::paintOnConsole("Sorry, Reverse Guess Number above 4-digit is not supported right now.", ForegroundColors::LIGHT_PURPLE);
+            return;
+        }
+
         $this->displayGameInfo();
         $this->hostGame();
     }
