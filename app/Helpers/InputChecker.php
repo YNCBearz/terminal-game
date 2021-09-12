@@ -30,6 +30,20 @@ class InputChecker
      */
     public function isValidGuessResult(string $guessResult): bool
     {
-        return false;
+        $guessResult = strtoupper($guessResult);
+        $strSplit = str_split($guessResult);
+
+        if (count($strSplit) != 4) {
+            return false;
+        }
+
+        $bullCounts = $strSplit[0];
+        $cowCounts = $strSplit[2];
+
+        if (!is_numeric($bullCounts) && !is_numeric($cowCounts)) {
+            return false;
+        }
+
+        return true;
     }
 }
