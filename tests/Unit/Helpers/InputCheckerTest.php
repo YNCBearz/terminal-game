@@ -70,13 +70,14 @@ class InputCheckerTest extends TestCase
     /**
      * @test
      *
+     * @param int $length
      * @param string $guessResult
      *
      * @dataProvider formatGuessResult
      */
-    public function GivenFormatGuessResult_WhenIsValidGuessResult_ReturnTrue(string $guessResult)
+    public function GivenFormatGuessResult_WhenIsValidGuessResult_ReturnTrue(int $length, string $guessResult)
     {
-        $this->sut = new InputChecker(5);
+        $this->sut = new InputChecker($length);
 
         $actual = $this->sut->isValidGuessResult($guessResult);
 
@@ -97,8 +98,8 @@ class InputCheckerTest extends TestCase
     public function formatGuessResult(): array
     {
         return [
-            ['0A1b'],
-            ['1a1b'],
+            [4, '0A1b'],
+            [4, '1a1b'],
         ];
     }
 
